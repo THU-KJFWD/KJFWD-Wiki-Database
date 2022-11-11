@@ -29,8 +29,10 @@ dateCreated: 2022-11-10T18:04:30.521Z
 
 你可以在“工时”一栏中看到完成这项任务的基础工时/bonus，工时取决于任务的复杂程度，只要你按要求完成即可拿到基础工时，而bonus取决于你完成任务的质量，因此希望你可以高质量完成任务。
 
-# 如何维护文档
+# 通过Wiki.js网页维护文档
 </br>
+
+## 0.首先，你应该有个账号~请联系[方文昊](mailto:fwh20@mails.tsinghua.edu.cn)
 
 ## 1.新建页面
 <img src="/截屏2022-11-11_02.09.28.png" width=30%>
@@ -44,6 +46,14 @@ dateCreated: 2022-11-10T18:04:30.521Z
 ## 4.选择Markdown编辑器
 
 <img src="/截屏2022-11-11_02.13.38.png" width=60%>
+
+# 通过github维护文档
+
+## 没错！我们引入了先进的分布式版本控制系统！
+  
+1.访问[Github Page](https://github.com/changyun233/PC1stAid)
+2.请先参考[CSDN教程](https://blog.csdn.net/xiaobinqt/article/details/116277126)
+3.提出PR后请联系[方文昊](mailto:fwh20@mails.tsinghua.edu.cn)请求合并
 
 
 # 注意事项
