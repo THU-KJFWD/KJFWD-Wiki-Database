@@ -51,9 +51,9 @@ dateCreated: 2022-11-10T18:04:30.521Z
 
 ## 没错！我们引入了先进的分布式版本控制系统！
   
-1.访问[Github Page](https://github.com/changyun233/PC1stAid)
-2.请先参考[CSDN教程](https://blog.csdn.net/xiaobinqt/article/details/116277126)
-3.提出PR后请联系[方文昊](mailto:fwh20@mails.tsinghua.edu.cn)请求合并
+1.访问[Github Page](https://github.com/changyun233/PC1stAid)  
+2.请先参考[CSDN教程](https://blog.csdn.net/xiaobinqt/article/details/116277126)  
+3.提出PR后请联系[方文昊](mailto:fwh20@mails.tsinghua.edu.cn)请求合并  
 
 
 # 注意事项
