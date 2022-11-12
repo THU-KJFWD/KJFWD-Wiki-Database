@@ -35,17 +35,17 @@ dateCreated: 2022-11-10T18:04:30.521Z
 ## 0.首先，你应该有个账号~请联系[方文昊](mailto:fwh20@mails.tsinghua.edu.cn)
 
 ## 1.新建页面
-<img src="/截屏2022-11-11_02.09.28.png" width=30%>
+<img src="/regulations/img/截屏2022-11-11_02.09.28.png" width=30%>
 
 ## 2.选择新页面的位置
-<img src="/截屏2022-11-11_02.10.46.png" width=80%>
+<img src="/regulations/img/截屏2022-11-11_02.10.46.png" width=80%>
 
 ## 3.填写页面属性
-<img src="/截屏2022-11-11_02.15.06.png" width=80%>
+<img src="/regulations/img/截屏2022-11-11_02.15.06.png" width=80%>
 
 ## 4.选择Markdown编辑器
 
-<img src="/截屏2022-11-11_02.13.38.png" width=60%>
+<img src="/regulations/img/截屏2022-11-11_02.13.38.png" width=60%>
 
 # 通过github维护文档
 
