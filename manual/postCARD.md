@@ -17,8 +17,6 @@ dateCreated: 2022-11-09T07:49:27.915Z
 > 说人话：你妈喊你早上起床，你迅速从脑子里过了一遍，今天有没有肚子疼、嗓子疼、腿疼、头疼，哦，原来今天轮到jio疼了，于是你给你妈说，妈，我脚疼！就接着睡了
 
 # 诊断卡怎么用
-> 新的主板通常不会把诊断代码发送给PCI-E总线上的设备，因此没有PCI插槽的主板可能只有LPC和USB接口可以用来插诊断卡了 
-> <p align="right">--翻译自英文 <a href="https://en.wikipedia.org/wiki/POST_card/">Wikipedia</a> </p>
 
 ![noteverymonkeyisphotographer.jpg](/manual/img/monkeywithdlsr.jpg)
 
@@ -37,6 +35,9 @@ dateCreated: 2022-11-09T07:49:27.915Z
 
 ## 第三步，好多插口，诊断卡应该插在哪里捏？
 
+> 新的主板通常不会把诊断代码发送给PCI-E总线上的设备，因此没有PCI插槽的主板可能只有LPC和USB接口可以用来插诊断卡了 
+> <p align="right">--翻译自英文 <a href="https://en.wikipedia.org/wiki/POST_card/">Wikipedia</a> </p>
+
 ![postcard.jpg](/manual/img/postcard.jpg)
 
 诊断卡结构如上图所示，板上集成了PCI、PCI-E和USB诊断插口，初次之外，还有一个不怎么常见的EC诊断口，该插口仅部分笔记本有集成。
@@ -52,4 +53,17 @@ dateCreated: 2022-11-09T07:49:27.915Z
 | :----: | :----: | :----: | :----: | :----: |
 | 台式机  | USB |  PCI |  LPC |  PCI-E,M.2  |   
 | 笔记本 | USB |  EC |  miniPCIE/SATA  |  M.2  |   
+
+> 请注意！不要将PCI/PCI-E插口插进PCI-E/PCI槽中，100%烧毁！
+
+
+按照以上顺序，通常来说，如果到PCI-E/M.2 插槽还是没有读码，这台设备就不支持诊断卡了。（悲，确实是有主板选择不向总线设备发送诊断代码的  
+
+## 第四步，获得诊断代码
+
+到这一步就可以获得两个十六进制数啦，那么他对应什么意思呢？  
+  
+其实APP上已经集成了四家BIOS厂家的诊断代码含义了，通常来说大家能见到的BIOS也就是这四家代工的，按照对应厂家的操作就行。现在Phoenix的相对少见一些，台式机AMI比较多，笔记本Insyde比较多。也有一些神秘厂家会用开源产品自己魔改出BIOS，比如Surface系列的UEFI就是微软自己造的，Macbook的UEFI也是果子自己改的，不过通常来说诊断代码会有一些共同性，并且上面提到的这俩没一个善茬，去售后吧真的，别折磨自己。
+
+
 
