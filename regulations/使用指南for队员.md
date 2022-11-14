@@ -43,22 +43,23 @@ dateCreated: 2022-11-10T18:04:30.521Z
 ## 0.首先，你应该有个账号~请联系[方文昊](mailto:fwh20@mails.tsinghua.edu.cn)
 
 ## 1.新建页面
-<img src="/regulations/img/截屏2022-11-11_02.09.28.png" width=30%>
+<img src="/regulations/img/使用指南_新建.png" width=30%>
 
 ## 2.选择新页面的位置
-<img src="/regulations/img/截屏2022-11-11_02.10.46.png" width=80%>
+<img src="/regulations/img/使用指南_选择.png" width=80%>
 
 ## 3.填写页面属性
-<img src="/regulations/img/截屏2022-11-11_02.15.06.png" width=80%>
+<img src="/regulations/img/使用指南_属性.png" width=80%>
 
 ## 4.选择Markdown编辑器
 
-<img src="/regulations/img/截屏2022-11-11_02.13.38.png" width=60%>
+<img src="/regulations/img/使用指南_md.png" width=60%>
 
 # 注意事项
 1. Markdown的语法可以在Markdown的[官方文档](https://markdown.com.cn/)中查询。
 2. 编写文档时请尽可能图文并貌，这将为他人带来极大的帮助。
 3. 涉及代码的内容请一定一定要使用“**代码块**”！
+4. 图片请保存为有损压缩的JPG格式，并存放在对应板块的img文件夹下。请按照"文档名_图片名"的格式为图片命名，图片名需有意义。
 > 请不要随意删除或修改其他文档的内容，一经发现将会严肃处理！
 {.is-danger}
 

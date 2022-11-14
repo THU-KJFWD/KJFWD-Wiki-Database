@@ -18,7 +18,7 @@ dateCreated: 2022-11-09T07:49:27.915Z
 
 # 诊断卡怎么用
 
-![noteverymonkeyisphotographer.jpg](/manual/img/monkeywithdlsr.jpg)
+![noteverymonkeyisphotographer.jpg](/manual/img/post_monkeywithdlsr.jpg)
 
 #### BUT everyone with POST CARD can diagnose PC with it!
 
@@ -38,7 +38,7 @@ dateCreated: 2022-11-09T07:49:27.915Z
 > 新的主板通常不会把诊断代码发送给PCI-E总线上的设备，因此没有PCI插槽的主板可能只有LPC和USB接口可以用来插诊断卡了 
 > <p align="right">--翻译自英文 <a href="https://en.wikipedia.org/wiki/POST_card/">Wikipedia</a> </p>
 
-![postcard.jpg](/manual/img/postcard.jpg)
+![postcard.jpg](/manual/img/post_postcard.jpg)
 
 诊断卡结构如上图所示，板上集成了PCI、PCI-E和USB诊断插口，初次之外，还有一个不怎么常见的EC诊断口，该插口仅部分笔记本有集成。
 除此之外，新款诊断卡还有四个扩展板，可以通过排线链接：
