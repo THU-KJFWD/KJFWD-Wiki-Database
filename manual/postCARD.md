@@ -18,11 +18,7 @@ dateCreated: 2022-11-09T07:49:27.915Z
 
 # 诊断卡怎么用
 
-![noteverymonkeyisphotographer.jpg](/manual/img/post_monkeywithdlsr.jpg)
-
-#### BUT everyone with POST CARD can diagnose PC with it!
-
-诊断卡真的是最容易使用、且效率最高的工具了捏！
+### 诊断卡真的是最容易使用、且效率最高的工具了捏！
 
 ## 第一步，你需要一部安卓手机并下载[APP](http://nas.kjfwd.com:31200/sharing/nrdO5IuJ2)  
 
@@ -103,7 +99,7 @@ dateCreated: 2022-11-09T07:49:27.915Z
 </details> 
 
   
-  
+
 以下是AMI BIOS 代码对应的含义参考，翻译在做了.jpg
 
 <details>
