@@ -43,7 +43,7 @@ dateCreated: 2022-11-09T06:35:54.961Z
 那么，本着既要又要的原则，这个实验室能不能在家庭和学生版的 Windows 上实现多用户同时登录捏？  
 
   
-![wqdy.jpg](/system/windows/multi_userrdp/wqdy.jpg)
+![wqdy.jpg](/system/windows/img/multiRDP_wqdy.jpg)
 
 ## 千红万紫安排著，只待新雷第一声。请先将你的视窗®作业系统切换到教育版/企业版/专业版/专业工作站版
 
