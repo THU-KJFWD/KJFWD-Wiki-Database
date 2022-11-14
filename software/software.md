@@ -2,7 +2,7 @@
 title: 使用 Office Tool Plus 管理 MS Office 套件
 description: 什么年代了还在使用传统 Office 安装镜像
 published: true
-date: 2022-10-18T14:07:25.032Z
+date: 2022-11-14T16:13:19.782Z
 tags: 
 editor: markdown
 dateCreated: 2022-09-29T15:42:02.584Z
@@ -98,7 +98,7 @@ OTP的运行依赖 .Net Core 3.1 x86 运行库，必须先从网站提供的链�
 
 ![9](\images\9.png)
 
-随后，在激活页面中选择 KMS 选项卡，填入清华大学 KMS 服务器的地址`https://kms.cic.tsinghua.edu.cn`，点击保存设置，数秒后即可在右侧得到激活成功的消息，可以在。
+随后，在激活页面中选择 KMS 选项卡，填入清华大学 KMS 服务器的地址`kms.cic.tsinghua.edu.cn`，点击保存设置，数秒后即可在右侧得到激活成功的消息，可以在。
 
 ![10](\images\10.png)
 
