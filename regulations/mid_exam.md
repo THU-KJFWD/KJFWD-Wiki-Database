@@ -2,7 +2,7 @@
 title: 中期考核内容、考核标准
 description: 不会啊，怎么办
 published: true
-date: 2022-11-15T07:08:57.606Z
+date: 2022-11-15T17:01:11.296Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-15T06:49:33.720Z
@@ -89,7 +89,7 @@ dateCreated: 2022-11-15T06:49:33.720Z
 
 # 科目三：使用 WePE 在固态硬盘内安装 Windows 10系统
 ## 考核内容
-1. 随机使用笔记本或台式机操作
+1. 对于不和科目一一起考核的，使用笔记本进行操作
 2. 设置U盘位第一启动项，进入WePE系统
 3. 使用傲梅分区助手或diskgenius完成固态硬盘分区（3号或2号）
 4. 使用Dism++或windows安装器或ISO内setup.exe安装windows系统
