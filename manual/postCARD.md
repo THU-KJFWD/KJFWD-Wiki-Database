@@ -68,32 +68,32 @@ dateCreated: 2022-11-09T07:49:27.915Z
 <details>
 <summary>AMI BIOS启动过程 1991年2月 英文<a href="http://www.bioscentral.com/postcodes/amibios.htm">Ref:BIOSCentral</a></summary>
 <br>
-
-|  Name  |  Post Procedures  |   
-| :----: | :----: |  
-|  NMI disable  |  NMI interrupt line to the CPU is disabled by setting bit 7 I?O port 70h (CMOS)  |   
-| Power On Delay  | Once the keyboard controller gets power, it sets the hard and soft reset bits.  Check the keyboard controller or clock generator if a failure occurs |   
-| Initialize Chipsets | Check the BIOS, CLOCK and chipsets |  
-| Reset Determination | The BIOS reads the bits in the keyboard controller to see if a hard or soft reset is required (a soft reset will not test memory above 64K).  Failure could be the BIOS or keyboard controller |  
-| ROM BIOS Checksum | 	The BIOS performs a checksum on itself and adds a preset factory value that should make it equal to 00.  If a failure occurs, check the BIOS chips |  
-| Keyboard Test | 	A command is sent to the 8042 keyboard controller which performs a test and sets a buffer space for commands.  After the buffer is defined the BIOS sends a command byte, writes data to the buffer, checks the high order bits of the internal keyboard controller and issues a No Operation (NOP) command |  
-| CMOS | Shutdown byte in CMOS RAM offset 0F is tested, the BIOS checksum calculated and diagnostic byte 0E updated before the CMOS RAM area is initialized and updated for date and time.  Check the RTC and CMOS chip or battery if a failure occurs |  
-| DMA (8237) and PIC (8259) Disable | The DMA and Programmable Interrupt Controller are disabled before the POST proceeds and further.  Check the 8237 or 8259 chips if a failure occurs |  
-| Video Disable | 	The video controller is disabled and port B initialized.  Check the video adapter if a failure occurs |  
-| Chipset Initialized and Memory Detected | Memory addressed in 64K blocks.   Failure would be in the chipset.  If all memory is not seen, failure could be in a chip in the block after the last one seen |  
-| PIT Test | The timing functions of the 8254 Programmable Interrupt Timer are tested.  The PIT and RTC chips normally cause errors here |  
-| Memory Refresh | PIT's ability to refresh memory is tested.  If an XT, DMA controller #1 handles this.  Failure is normally the PIT (8254) in AT's or the 8237, DMA #1, in XT's |  
-| Address Line | Test the address lines in the first 64K of RAM.  If a failure occurs, an address line may be the problem |  
-| Base 64K | Data patterns are written to the first 64K of RAM, unless there is a bad RAM chip in which case you will get a failure |  
-| Chipset Initialization | The PIT, PIC and DMA controllers are initialized |  
-| Set Interrupt Table | Interrupt vector table used by PIC is installed in low memory, the first 2K |  
-| 8042 Keyboard Controller Check | The BIOS reads the buffer area in the keyboard controller I/O port 60.  Failure here is normally the keyboard controller |  
-| Video Tests | The type of video adapter is checked for, then a series of tests are performed on the adapter and monitor |  
-| BIOS Data Area | The vector table is checked for proper operation and video memory verified before protected mode tests are entered into.   This is done so that any errors found are displayed on the monitor |  
-| Protected Mode Tests | Perform reads and writes to all memory locations below 1MB.  Failure at this point indicate a bad RAM chip, the 8042 Keyboard Controller or a data line |  
-| DMA Chips | The DMA registers are tested using a data pattern |  
-| Final Initialization | 	these differ with each version.   Typically, the floppy and hard drives are tested and initialized and a check is made for serial and parallel devices.  The information gathered is then compared against the contents of the CMOS and you will see the results of any failures on the monitor |  
-| BOOT | 	The BIOS hands over control to the Int 19 bootloader.  This is where you would see error messages such as non-system disk |  
+  
+|  Name  |  Post Procedures  |  启动阶段 |  
+| :----: | :----: | :----: |  
+|  NMI disable  |  NMI interrupt line to the CPU is disabled by setting bit 7 I?O port 70h (CMOS)  |  不可屏蔽中断禁用，类似于复位信号恢复 |  
+| Power On Delay  | Once the keyboard controller gets power, it sets the hard and soft reset bits.  Check the keyboard controller or clock generator if a failure occurs |  检查键盘控制器电源，检查键盘控制器或时钟发生器是否失效  |  
+| Initialize Chipsets | Check the BIOS, CLOCK and chipsets | 初始化芯片组、时钟和BIOS |  
+| Reset Determination | The BIOS reads the bits in the keyboard controller to see if a hard or soft reset is required (a soft reset will not test memory above 64K).  Failure could be the BIOS or keyboard controller | 读取键盘确认是否需要软/硬重置，软重置不会重置64K以上的存储，其他可能导致软/硬重置的因素可能是BIOS或者键盘 |  
+| ROM BIOS Checksum | 	The BIOS performs a checksum on itself and adds a preset factory value that should make it equal to 00.  If a failure occurs, check the BIOS chips | BIOS执行BIOS程序校验和自检，若校验和检测阶段出错，检查BIOS存储芯片 |  
+| Keyboard Test | 	A command is sent to the 8042 keyboard controller which performs a test and sets a buffer space for commands.  After the buffer is defined the BIOS sends a command byte, writes data to the buffer, checks the high order bits of the internal keyboard controller and issues a No Operation (NOP) command | 向8042键盘控制器发送测试命令并设置命令缓存，之后会向缓存写数据并检查键盘是否会响应"误操作"命令 |  
+| CMOS | Shutdown byte in CMOS RAM offset 0F is tested, the BIOS checksum calculated and diagnostic byte 0E updated before the CMOS RAM area is initialized and updated for date and time.  Check the RTC and CMOS chip or battery if a failure occurs |  |  
+| DMA (8237) and PIC (8259) Disable | The DMA and Programmable Interrupt Controller are disabled before the POST proceeds and further.  Check the 8237 or 8259 chips if a failure occurs | 在后续POST过程中禁用<a href="https://nec.edu.np/faculty/pramodg/8237_DMA.pdf">DMA</a>和<a href="https://en.wikipedia.org/wiki/Intel_8259">PIC</a>控制器，如果有此阶段的错误代码检查8237和8259芯片 |  
+| Video Disable | 	The video controller is disabled and port B initialized.  Check the video adapter if a failure occurs | 禁用视频控制器（ |  
+| Chipset Initialized and Memory Detected | Memory addressed in 64K blocks.   Failure would be in the chipset.  If all memory is not seen, failure could be in a chip in the block after the last one seen |  |  
+| PIT Test | The timing functions of the 8254 Programmable Interrupt Timer are tested.  The PIT and RTC chips normally cause errors here |  |  
+| Memory Refresh | PIT's ability to refresh memory is tested.  If an XT, DMA controller #1 handles this.  Failure is normally the PIT (8254) in AT's or the 8237, DMA #1, in XT's |  |  
+| Address Line | Test the address lines in the first 64K of RAM.  If a failure occurs, an address line may be the problem |  |  
+| Base 64K | Data patterns are written to the first 64K of RAM, unless there is a bad RAM chip in which case you will get a failure |  |  
+| Chipset Initialization | The PIT, PIC and DMA controllers are initialized |  |  
+| Set Interrupt Table | Interrupt vector table used by PIC is installed in low memory, the first 2K |  |  
+| 8042 Keyboard Controller Check | The BIOS reads the buffer area in the keyboard controller I/O port 60.  Failure here is normally the keyboard controller |  |  
+| Video Tests | The type of video adapter is checked for, then a series of tests are performed on the adapter and monitor |  |  
+| BIOS Data Area | The vector table is checked for proper operation and video memory verified before protected mode tests are entered into.   This is done so that any errors found are displayed on the monitor |  |  
+| Protected Mode Tests | Perform reads and writes to all memory locations below 1MB.  Failure at this point indicate a bad RAM chip, the 8042 Keyboard Controller or a data line |  |  
+| DMA Chips | The DMA registers are tested using a data pattern |  |  
+| Final Initialization | 	these differ with each version.   Typically, the floppy and hard drives are tested and initialized and a check is made for serial and parallel devices.  The information gathered is then compared against the contents of the CMOS and you will see the results of any failures on the monitor |  |  
+| BOOT | 	The BIOS hands over control to the Int 19 bootloader.  This is where you would see error messages such as non-system disk |  |  
   
   
 </details> 
