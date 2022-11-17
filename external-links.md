@@ -2,7 +2,7 @@
 title: 他山之石
 description: 一些解决问题的链接
 published: true
-date: 2022-11-11T12:43:52.696Z
+date: 2022-11-17T07:14:08.511Z
 tags: 
 editor: markdown
 dateCreated: 2022-10-02T13:33:06.149Z
@@ -42,3 +42,8 @@ Office部署、修复、卸载等
 一个制作可启动U盘的开源工具
 只需要把镜像文件直接拷贝到U盘里面就可以启动了
 > 新一代多系统启动U盘解决方案
+
+## [Snappy Driver Installer](http://sdi-tool.org/)
+简称 SDI, 界面奇丑，源码写得极烂，空间占用极大（25GB+），但不妨碍这玩意太好用了。
+运行后本软件会自动扫描硬件并从数据库中匹配最佳驱动，全选安装，十分钟后驱动就全打好啦！
+> If you're a PC technician, keep Snappy Driver Installer on your USB flash drive or external hard drive and take it with you wherever you go. In environments with no Internet access you can quickly get things working. No more searching for drivers after a clean install, just let Snappy Driver Installer do it's thing and your job will be done in no time.
