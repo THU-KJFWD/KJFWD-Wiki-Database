@@ -2,7 +2,7 @@
 title: 双系统！
 description: 
 published: true
-date: 2022-11-18T10:31:34.632Z
+date: 2022-11-18T10:35:54.820Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-18T10:31:34.632Z
@@ -33,8 +33,7 @@ Linux是一个类似于Windows和MacOS的操作系统，他有一些独有的特
 Windows 一样的流程，搜索安装包、做安装盘、设置新电脑的启动项、安装系统。因此大家在准备安系统的时候，不要搜索下载“Linux 系统安装包”，而是去找“Ubuntu 安装包”之类的具体发行版。本文只简单介绍一下 Ubuntu——最常见、最适合入门、最通用、教程最多、使用最广的发行版。
 
 ### 关于Ubuntu
-
-![1668699594791](image/Linux/1668699594791.png)
+![1668699594791.png](/system/bisystem_image/1668699594791.png)
 
 上图是Ubuntu 16.04 桌面和一个打开的系统设置窗口。可以看到，经历这些年的发展与进化，Linux 发行版可以对新手很友好。大家熟悉的桌面、窗口、任务栏、文件资源管理器、Office 套件、应用商店、网络/输入法/音量/时间地区调节，基本都可以无缝切换到Ubuntu 系统里，用的仍然是大家最熟悉的键盘鼠标。因此不用担心，对于非计算机专业、只用 Linux 做一点事的同学而言，可以不学 Shell 操作，让科服队员来帮忙配一些基本东西后，保持只用图形界面的基本操作。但对于更多的 Linux用户，在绝大多情况下 Shell 更加的强大和便捷。
 
@@ -60,14 +59,12 @@ Windows 一样的流程，搜索安装包、做安装盘、设置新电脑的启
 ### Windows分区
 
 首先，示例的系统环境是一个最普通的 Win11 机器，版本是 2004 专业教育版，总硬盘空间 60G。
-
-![1668754801240](image/Linux/1668754801240.png)
+![1668754801240.png](/system/bisystem_image/1668754801240.png)
 
 为了便于之后分辨盘，将 C 盘的卷标改为 Win。
 压缩 C 盘，留出 20G 空间给 Ubuntu（此处硬盘空间大小请根据自己情况指定，考虑未来工作，建议不小于20G）。
 压缩出来的空间不必再新建分区和格式化，交给 Ubuntu 一块未分区的空间即可。
-
-![1668754889910](image/Linux/1668754889910.png)
+![1668754889910.png](/system/bisystem_image/1668754889910.png)
 
 ### Ubuntu安装盘制作
 
@@ -100,13 +97,13 @@ Ubuntu 的开发者有个奇葩习惯，用奇怪的词给每个大版本起代�
 > （摘自Ventoy官网 [https://www.ventoy.net/cn/](https://www.ventoy.net/cn) )
 
 进入官网，直接下载Windows版本（这里因为众所周知的原因，推荐使用镜像站下载）。解压后用管理员权限打开Ventoy2Disk.exe，在设备中选择需要安装到的U盘的安装路径，点击安装即可。（**再次提醒，安装会格式化U盘，注意数据安全！！**）
-安装完成后，U盘名字会变成Ventoy，直接将下载好的系统镜像复制进入U盘即可，Ventoy会自动扫描识别，同时可以正常使用U盘（这就是本人推荐的原因）。![1668756722186](image/Linux/1668756722186.png)
+安装完成后，U盘名字会变成Ventoy，直接将下载好的系统镜像复制进入U盘即可，Ventoy会自动扫描识别，同时可以正常使用U盘（这就是本人推荐的原因）。
+![1668756722186.png](/system/bisystem_image/1668756722186.png)
 
 #### 使用Rufus
 
 下载（又是因为一些众所周知的原因官方下载不是很可行于是我们推荐[这个](https://www.fosshub.com/Rufus.html?dwl=rufus-3.20.exe)网站）后双击打开，选择下载好的Ubuntu镜像与安装盘，软件会自动设置，点击开始即可（**第三次提醒，开始会格式化U盘，记得备份！！！）**。
-
-![1668757889736](image/Linux/1668757889736.png)
+![1668757889736.png](/system/bisystem_image/1668757889736.png)
 
 ### Ubuntu安装
 
@@ -114,29 +111,24 @@ Ubuntu 的开发者有个奇葩习惯，用奇怪的词给每个大版本起代�
 此处需要进入BIOS选择启动顺序，不同品牌进入BIOS操作不同，可以在网络上查询，一般都是开机后马上立即狂按F12即可进入。进入BIOS后，选择BOOT Option之类的选项，将Boot Priority#1设置为含有USB / Portable / Removable等等选项（即U盘），保存并退出以后重启电脑，即可完成从安装盘启动这一操作。
 
 下图是安装Ventoy完成以后，从安装盘启动的界面。（source：官网）
-
-![1668756969417](image/Linux/1668756969417.png)
+![1668756969417.png](/system/bisystem_image/1668756969417.png)
 
 下图是使用Rufus的安装界面。
-
-![1668758188412](image/Linux/1668758188412.png)
+![1668758188412.png](/system/bisystem_image/1668758188412.png)
 
 这就是进入了 GRUB 界面，选择 Install Ubuntu，之后便回到了正常的安装过程。
 语言建议默认选英语（因为众所周知的编码问题，选中文会出现一些玄学bug，不是很建议~毕竟都用Linux了~），键盘选默认 English(US)。接下来会给出 Normal 和 Minimal 两种安装方式。正如字面描述的，Normal 包含了浏览器、常规附件、office、小游戏、媒体播放器等等，而 Minimal 安装则最少化附件。实际上，不论选择哪个，都可以通过后期操作安装/卸载掉有差别的部分。这里我们选择 Normal 方式。下方的Download updates while installing Ubuntu 建议不选，因为此时系统会从默认来源（外网）下载系统更新，很慢。而最后一个 Install third-party……按自己需求决定，这里也暂不选。
 在选择安装方式这一步的时候，Ubuntu 会提示已经检测到其它系统的引导（Windows Boot Manager）。
-
-![1668758945743](image/Linux/1668758945743.png)
+![1668758945743.png](/system/bisystem_image/1668758945743.png)
 
 Install alongside 即傻瓜式安装，同时保留 Win 和 Ubuntu 两个系统，并且让 Ubuntu 来帮忙分好盘。Erase disk 当然就是直接格式干净 Win，把整个磁盘用来装 Ubuntu。最下面的Something else 即自定义安装，手动分好盘，指定 Ubuntu 安到哪里。
 这里我们先选择第一项，Install aloneside，弹出提示即将进行的操作如下。
-
-![1668758973557](image/Linux/1668758973557.png)
+![1668758973557.png](/system/bisystem_image/1668758973557.png)
 
 在 Linux 系统下，没有 C 盘 D 盘之类单个字母的卷标，只有/dev/下的设备文件来指代硬盘，例如上图 Ubuntu 就将这唯一的一块硬盘命名为了/dev/nvme0n1。可以看到 Ubuntu 自动分析了当前磁盘状况，决定把自己安装到/dev/nvme0n1 这块盘的 partition 5，并将其格式化为 ext4 格式。这里的 Patition5 就是刚刚在 win 系统的磁盘管理中留出的 20G 空间。
 
 至此已经可以直接安装。如果暂不安装，返回，选择 Something else 来进一步查看分区。一般进一步分区能够更详细地掌控硬盘使用情况。
-
-![1668758999699](image/Linux/1668758999699.png)
+![1668758999699.png](/system/bisystem_image/1668758999699.png)
 
 我们可以根据顺序、大小、类型来推测这一堆分区都是什么。第一行/dev/nvme0n1 是指整个盘，从第二行开始依次是盘里的分区：
 
@@ -161,14 +153,10 @@ Install alongside 即傻瓜式安装，同时保留 Win 和 Ubuntu 两个系统�
 > 当然，不把这些空间独立分割出去，一起使用/的空间，会有最好的空间使用效率，但这样容易造成系统不稳定，或其它的问题的情形发生。linux文件系统的根目录，是一定要挂载的。没有特定指定分区挂载的目录，都会与根目录放在同一个分区中。
 
 首先点击 选中**free space** 空间，点击左下角的加号+，进行内存分配。下图是参考分配界面（source：CSDN, [地球被支点撬走啦](https://blog.csdn.net/Flag_ing "地球被支点撬走啦")）
-
-![1668761946941](image/Linux/1668761946941.png)
-
-![1668762048885](image/Linux/1668762048885.png)
-
+![1668761946941.jpg](/system/bisystem_image/1668761946941.jpg)
+![1668762048885.jpg](/system/bisystem_image/1668762048885.jpg)
 然后就是 boot loader 的安装位置，在界面下方的 **Device for boot loader installation** 中选择刚才分配 **/boot** 的那块空间，如下，点击继续。
-
-![1668762080538](image/Linux/1668762080538.png)
+![1668762080538.jpg](/system/bisystem_image/1668762080538.jpg)
 
 选择 Install Now 之后就进入了更细节的设置，不再逐步截图。简略介绍：
 
@@ -177,8 +165,7 @@ Install alongside 即傻瓜式安装，同时保留 Win 和 Ubuntu 两个系统�
 * 密码尽可能方便输入，你可能会需要常常输入它，不仅是刚开机时。
 
 之后，系统进入下图这样的正式安装界面。过程中可能需要联网下载少量资源，一般需要几分钟。
-
-![1668759271542](image/Linux/1668759271542.png)
+![1668759271542.png](/system/bisystem_image/1668759271542.png)
 
 等下方进度条跑完，按系统提示重启。此时可能会提示让断开安装介质（系统安装盘），这时候拔下U盘即可。
 
@@ -193,24 +180,20 @@ Install alongside 即傻瓜式安装，同时保留 Win 和 Ubuntu 两个系统�
 * 初始分辨率可能奇小(800x600?)，使得很多窗口显示不全，设置（Setting）（约等于Win 的控制面板）里面可以调，Setting->Devices->Displays->Resolution，但分辨率可能小到右上角的 Apply 按钮都加载不出来，有时候需要鼠标往左拖一拖窗口。
 
 不论哪种安装方式，安装正确后都应该可以在 bios 看到新的启动选项——“ubuntu”——出现。此时默认开机选项应该是 Ubuntu，开机后会进入 grub 界面，可以手动选择进入哪个（但是选择时间很短，记得关注~不然会像我一样每次开机都会再关机再开机进Windows~）。
-
-![1668759197640](image/Linux/1668759197640.png)
+![1668759197640.png](/system/bisystem_image/1668759197640.png)
 
 至此，两个系统都应该可以正常进入使用，双系统安装完成。
 
 ### 两个系统眼中的对方
 
 在 Ubuntu 系统打开应用列表->Utilities->Disks，可以打开 Ubuntu 的硬盘管理界面。
-
-![1668759503201](image/Linux/1668759503201.png)
+![1668759503201.png](/system/bisystem_image/1668759503201.png)
 
 对于最显眼的 Win 分区，Ubuntu 已经正确识别出 NTFS 格式。单击选中，点左下的“播放”挂载这个分区，可以看到最下面一行写着”Mounted at /media/kjfwdubuntu/Win”。打开这个路径就可以正常访问 Win 盘的内容。
-
-![1668759519848](image/Linux/1668759519848.png)
+![1668759519848.png](/system/bisystem_image/1668759519848.png)
 
 重启，打开 Windows 系统，可以看到 Win11 无法自动识别出来 linux 的 ext4 分区，也就无法访问其中的内容，也无法分配卷标和盘符。
-
-![1668759531857](image/Linux/1668759531857.png)
+![1668759531857.png](/system/bisystem_image/1668759531857.png)
 
 最后，再简单介绍一遍当前系统的启动机制。在安装 Ubuntu 的过程中，由于 Ubuntu 自动识别出了 Windows 系统的存在，所以它默认会在每次启动 grub 引导的时候，给出一个Windows boot manager 的选项。用户也就不需要每次切换系统都去 BIOS 中调整启动顺序，而是会在 grub 引导里面选择。
 
@@ -219,12 +202,10 @@ Install alongside 即傻瓜式安装，同时保留 Win 和 Ubuntu 两个系统�
 操作系统的卸载一般是直接格式化硬盘，但如果是双系统的情况，仅仅格式一个系统所在分区可能并删不干净。
 
 在 Win 系统下，删除 Ubuntu 所在分区，重启。此时会默认进入 grub 命令行界面。
-
-![1668759576828](image/Linux/1668759576828.png)
+![1668759576828.png](/system/bisystem_image/1668759576828.png)
 
 虽然 grub 本身还在，但给它提供选项的 ubuntu 已经没了，于是 grub 陷入了懵逼的命令行界面。在这里输入 exit，退回到 BIOS。
-
-![1668759589996](image/Linux/1668759589996.png)
+![1668759589996.png](/system/bisystem_image/1668759589996.png)
 
 可以看到，ubuntu 的启动选项还在，而且启动顺序还保留在首位。进入 boot option，将这一项删掉，即可将默认 boot 选项改回 Windows Boot Manager，可以正常使用纯 Windows系统了。
 
