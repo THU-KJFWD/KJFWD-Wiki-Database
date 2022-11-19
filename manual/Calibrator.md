@@ -2,7 +2,7 @@
 title: 校色仪使用教程
 description: 给你的显示器校个色～
 published: true
-date: 2022-11-19T17:15:03.873Z
+date: 2022-11-19T17:29:21.962Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-19T17:11:02.777Z
@@ -262,7 +262,7 @@ DisplayCAL的官方网站是：https://www.displaycal.net/
 大功告成，现在你的显示器已经完成了校准！
 # 说在后面
 
-本教程前半部分SpyderX的部分大部分为搬运SpyderX 官方用户指南，针对科服所采用的校色仪型号进行调整和补充。整体的软件引导比较清晰，所以或许你不会看到这里（x
+本教程SpyderX部分结合官方用户指南，针对科服所采用的校色仪型号进行调整和补充。整体的软件引导比较清晰，所以或许你不会看到这里（x
 
 后半部分Displaycal的部分参考了知乎文章[Argyll CMS+DisplayCAL屏幕校色基础教程](https://zhuanlan.zhihu.com/p/324208793)
 
