@@ -2,7 +2,7 @@
 title: 校色仪使用教程
 description: 给你的显示器校个色～
 published: true
-date: 2022-11-19T17:15:03.873Z
+date: 2022-11-19T17:31:24.463Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-19T17:11:02.777Z
@@ -99,7 +99,7 @@ dateCreated: 2022-11-19T17:11:02.777Z
 ![20](img/20.png)
 
 #### 外接显示器
-对于外界显示器，可以在浏览器中输入 https://www.displayspecifications.com/en，在右上角的搜索栏中输入自己的显示器的型号，便可以进行查询。
+对于外界显示器，可以在浏览器中输入 https://www.displayspecifications.com/en 在右上角的搜索栏中输入自己的显示器的型号，便可以进行查询。
 
 在笔记本的设置中可以在显示器一栏中看到外接屏幕的型号，如图所示。
 ![21](img/21.png)
@@ -262,7 +262,7 @@ DisplayCAL的官方网站是：https://www.displaycal.net/
 大功告成，现在你的显示器已经完成了校准！
 # 说在后面
 
-本教程前半部分SpyderX的部分大部分为搬运SpyderX 官方用户指南，针对科服所采用的校色仪型号进行调整和补充。整体的软件引导比较清晰，所以或许你不会看到这里（x
+本教程SpyderX部分结合官方用户指南，针对科服所采用的校色仪型号进行调整和补充。整体的软件引导比较清晰，所以或许你不会看到这里（x
 
 后半部分Displaycal的部分参考了知乎文章[Argyll CMS+DisplayCAL屏幕校色基础教程](https://zhuanlan.zhihu.com/p/324208793)
 
