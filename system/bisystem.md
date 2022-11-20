@@ -1,12 +1,13 @@
 ---
-title: 双系统！
+title: windows+linux双系统安装
 description: 
 published: true
-date: 2022-11-18T10:35:54.820Z
+date: 2022-11-20T13:09:46.690Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-18T10:31:34.632Z
 ---
+
 # Windows + Linux(Ubuntu) 双系统安装教程
 
 ## 说在前面
