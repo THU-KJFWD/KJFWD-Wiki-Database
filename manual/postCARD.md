@@ -192,3 +192,18 @@ dateCreated: 2022-11-09T07:49:27.915Z
 |  A3	|  Test extended NMI in EISA system  |
 |  00	|  Call the INT19 boot loader  |
 </details>
+
+
+<details>
+<summary>InsydeH20 BIOS启动过程和诊断代码<a href="https://zhuanlan.zhihu.com/p/560672681">Ref:BIOSCentral</a></summary>
+<br>
+
+|阶段|功能名称|代码|说明|  
+| :----: | :----: | :----: | :----: |  
+|SEC|SYSTEM_POWER_ON|1||
+|SEC|BEFORE_MICROCODE_PATCH|2||
+|SEC|AFTER_MICROCODE_PATCH|3||
+|SEC|ACCESS_CSR|||
+
+
+</details>
