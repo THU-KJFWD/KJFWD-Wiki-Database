@@ -18,6 +18,8 @@ dateCreated: 2022-11-09T07:49:27.915Z
 
 > 说人话：你妈喊你早上起床，你迅速从脑子里过了一遍，今天有没有肚子疼、嗓子疼、腿疼、头疼，哦，原来今天轮到 jio 疼了，于是你给你妈说，妈，我脚疼！就接着睡了
 
+本文希望通过介绍诊断卡的使用，帮助大家了解现代 BIOS/UEFI 的启动过程，启动过程放在了诊断代码部分。
+
 # 诊断卡怎么用
 
 ### 诊断卡真的是最容易使用、且效率最高的工具了捏！
@@ -37,7 +39,7 @@ dateCreated: 2022-11-09T07:49:27.915Z
 >
 > <p align="right">--翻译自英文 <a href="https://en.wikipedia.org/wiki/POST_card/">Wikipedia</a> </p>
 
-![postcard.jpg](/manual/img/post_postcard.jpg)
+![postcard.jpg](/manual/postcard/post_postcard.jpg)
 
 诊断卡结构如上图所示，板上集成了 PCI、PCI-E 和 USB 诊断插口，初次之外，还有一个不怎么常见的 EC 诊断口，该插口仅部分笔记本有集成。
 除此之外，新款诊断卡还有四个扩展板，可以通过排线链接：
@@ -66,7 +68,156 @@ dateCreated: 2022-11-09T07:49:27.915Z
 
 其实 APP 上已经集成了四家 BIOS 厂家的诊断代码含义了，通常来说大家能见到的 BIOS 也就是这四家代工的，按照对应厂家的操作就行。现在 Phoenix 的相对少见一些，台式机 AMI 比较多，笔记本 Insyde 比较多。也有一些神秘厂家会用开源产品自己魔改出 BIOS，比如 Surface 系列的 UEFI 就是微软自己造的，Macbook 的 UEFI 也是果子自己改的，不过通常来说诊断代码会有一些共同性，并且上面提到的这俩没一个善茬，去售后吧真的，别折磨自己。
 
-以下是 AMI BIOS 的启动过程，翻译在做了.jpg
+### 一些计算机的启动步骤和诊断代码
+
+![biosp.jpg](/manual/postcard/biosp.jpg)
+
+下文以 InsydeH20 BIOS 启动过程为例，简单描述从按下电源键开始到进入操作系统都经过那些步骤。实际上，大多数现代 BIOS 都有类似的规范，阅读下文的启动阶段详细描述有助于了解 UEFI 的启动过程
+
+#### SEC 阶段
+
+此阶段 CPU 还不能使用内存，通过将 Cache 配置为内存实现操作，之后需要加载 PEI CORE 并验证，之后找到[BFV(Boot firmware volume)](https://edk2-docs.gitbook.io/edk-ii-minimum-platform-specification/appendix_a_full_maps/a1_firmware_volume_layout)(链接指向 EDKII,是一个[开源](https://github.com/tianocore/edk2)的 UEFI 开发环境)  
+为什么叫 Security 阶段呢？这一阶段作为后续操作系统的[信任根(RootOfTrust)](https://blog.csdn.net/weixin_49369227/article/details/120646358),作为系统启动的第一部分，只有 SEC 能被系统信任，以后的各个阶段才有被信任的基础。因此，大部分情况下 SEC 在转交控制权给 PEI 前要验证 PEI 是否可信。
+
+| 阶段 |        功能名称        | 代码 |                                                  说明                                                   |
+| :--: | :--------------------: | :--: | :-----------------------------------------------------------------------------------------------------: |
+| SEC  |    SYSTEM_POWER_ON     | 0x01 |                                        CPU 开机并切换到保护模式                                         |
+| SEC  | BEFORE_MICROCODE_PATCH | 0x02 |                      CPU 加载[微码](https://en.wikipedia.org/wiki/Intel_Microcode)                      |
+| SEC  | AFTER_MICROCODE_PATCH  | 0x03 |                                         微码加载进端间寄存器中                                          |
+| SEC  |       ACCESS_CSR       | 0x04 |                 初始[CSR 寄存器](https://en.wikipedia.org/wiki/Control/Status_Register)                 |
+| SEC  |    GENERIC_MSRINIT     | 0x05 | 初始化[MSR 寄存器](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) |
+| SEC  |      CPU_SPEEDCFG      | 0x06 |                        在 MSR 寄存器内配置 CPU 指令吞吐率(millisec/instruction)                         |
+| SEC  |      SETUP_CAR_OK      | 0x07 |                                     cache as ram 缓存作为 RAM 测试                                      |
+| SEC  |    FORCE_MAX_RATIO     | 0x08 |                                        将 CPU 频率设置为最大水平                                        |
+| SEC  |    GO_TO_SECSTARTUP    | 0x09 |                                           设置 BIOS ROM 缓存                                            |
+| SEC  |     GO_TO_PEICORE      | 0x0A |                                              进入 PEI 阶段                                              |
+
+#### PEI 阶段
+
+PEI 阶段的 CPU_AP_INIT 阶段之前，处理器中只有一个核心作为 bootstrap processor,AP 阶段后,
+
+| 阶段 |         功能名称         | 代码 |                                                                说明                                                                 |
+| :--: | :----------------------: | :--: | :---------------------------------------------------------------------------------------------------------------------------------: |
+| PEI  |         SIO_INIT         | 0x70 |                                 [SIO](https://en.wikipedia.org/wiki/Super_I/O)初始化,包括热量,风扇                                  |
+| PEI  |       CPU_REG_INIT       | 0x71 |                                                           CPU 早期初始化                                                            |
+| PEI  |       CPU_AP_INIT        | 0x72 | [application processors 初始化](https://wiki.osdev.org/Symmetric_Multiprocessing),[其他参考](https://zhuanlan.zhihu.com/p/67989330) |
+| PEI  |       CPU_HT_RESET       | 0x73 |              [HT 总线](https://en.wikipedia.org/wiki/HyperTransport)重置(注意于超线程区分,即使他就在 AP 初始化的下面)               |
+| PEI  |      PCIE_MMIO_INIT      | 0x74 |                                                    PCIE Memory Mapped IO 初始化                                                     |
+| PEI  |       NB_REG_INIT        | 0x75 |                                                                                                                                     |
+| PEI  |       SB_REG_INIT        | 0x76 |                                                                                                                                     |
+| PEI  |      PCIE_TRAINING       | 0x77 |                                                                                                                                     |
+| PEI  |         TPM_INIT         | 0x78 |                                                                                                                                     |
+| PEI  |        SMBUS_INIT        | 0x79 |                                                                                                                                     |
+| PEI  |    PROGRAM_CLOCK_GEN     | 0x7A |                                                                                                                                     |
+| PEI  |    IGD_EARLY_INITIAL     | 0x7B |                                                                                                                                     |
+| PEI  |        HECI_INIT         | 0x7C |                                                                                                                                     |
+| PEI  |      WATCHDOG_INIT       | 0x7D |                                                                                                                                     |
+| PEI  |       MEMORY_INIT        | 0x7E |                                                                                                                                     |
+| PEI  |  MEMORY_INIT_FOR_CRISIS  | 0x7F |                                                                                                                                     |
+| PEI  |      MEMORY_INSTALL      | 0x80 |                                                                                                                                     |
+| PEI  |          TXTPEI          | 0x81 |                                                                                                                                     |
+| PEI  |       SWTTCH_STACK       | 0x82 |                                                                                                                                     |
+| PEI  |       MEMORY_STACK       | 0x83 |                                                                                                                                     |
+| PEI  |   ENTER_RECOVERY_MODE    | 0x84 |                                                                                                                                     |
+| PEI  |   RECOVERY_MEDIA_MODE    | 0x85 |                                                                                                                                     |
+| PEI  | RECOVERY_MEDIA_NOT_FOUND | 0x86 |                                                                                                                                     |
+| PEI  | RECOVERY_LOAD_FILE_DONE  | 0x87 |                                                                                                                                     |
+| PEI  |   RECOVERY_START_FLASH   | 0x88 |                                                                                                                                     |
+| PEI  |     PEI_ENTER_DXEIPL     | 0x89 |                                                                                                                                     |
+| PEI  |     FINDING_DXE_CORE     | 0x8A |                                                                                                                                     |
+| PEI  |      GO_TO_DXE_CORE      | 0x8B |                                                                                                                                     |
+
+#### DXE 阶段
+
+| 阶段 |       功能名称        | 代码 | 说明 |
+| :--: | :-------------------: | :--: | :--: |
+| DXE  |        TCGDXE         | 0x40 |      |
+| DXE  |      SB_SPI_INIT      | 0x41 |      |
+| DXE  |       CF9_RESET       | 0x42 |      |
+| DXE  |  SB_SERIAL_GPIO_INIT  | 0x43 |      |
+| DXE  |       SMMACCESS       | 0x44 |      |
+| DXE  |        NB_INIT        | 0x45 |      |
+| DXE  |       SIO_INIT        | 0x46 |      |
+| DXE  |     LEGACY_REGION     | 0x47 |      |
+| DXE  |        SB_INIT        | 0x48 |      |
+| DXE  | IDENTIFY_FLASH_DEVICE | 0x49 |      |
+| DXE  |       FTW_INIT        | 0x4A |      |
+| DXE  |     VARIABLE_INIT     | 0x4B |      |
+| DXE  |  VARIABLE_INIT_FAIL   | 0x4C |      |
+| DXE  |       MTC_INIT        | 0x4D |      |
+| DXE  |       CPU_INIT        | 0x4E |      |
+| DXE  |      MP_CPU_INIT      | 0x4F |      |
+| DXE  |      SMBUS_INIT       | 0x50 |      |
+| DXE  |   SMART_TIMER_INIT    | 0x51 |      |
+| DXE  |      PCRTC_INIT       | 0x52 |      |
+| DXE  |       SATA_INIT       | 0x53 |      |
+| DXE  |  SMM_CONTROLER_INIT   | 0x54 |      |
+| DXE  |   LEGACY_INTERRUPT    | 0x55 |      |
+| DXE  |    RELOCATE_SMBASE    | 0x56 |      |
+| DXE  |       FIRST_SMI       | 0x57 |      |
+| DXE  |       VTD_INIT        | 0x58 |      |
+| DXE  |   BEFORE_CSM16_INIT   | 0x59 |      |
+| DXE  |   AFTER_CSM16_INIT    | 0x5A |      |
+| DXE  |    LOAD_ACPI_TABLE    | 0x5B |      |
+| DXE  |      SB_DISPATCH      | 0x5C |      |
+| DXE  |    SB_IOTRAP_INIT     | 0x5D |      |
+| DXE  |    SUBCLASS_DRIVER    | 0x5E |      |
+| DXE  |       PPM_INIT        | 0x5F |      |
+| DXE  |     HECIDRV_INIT      | 0x60 |      |
+
+#### BDS & POST BDS 阶段
+
+| 阶段 |           功能名称           | 代码 | 说明 |
+| :--: | :--------------------------: | :--: | :--: |
+| BDS  |          ENTER_BDS           | 0x10 |      |
+| BDS  |        INSTALL_HOTKEY        | 0x11 |      |
+| BDS  |           ASF_INIT           | 0x12 |      |
+| BDS  |    PCI_ENUMERATION_START     | 0x13 |      |
+| BDS  |     BEFORE_PCIIO_INSTALL     | 0x14 |      |
+| BDS  |     PCI_ENUMERATION_END      | 0x15 |      |
+| BDS  |      CONNECT_CONSOLE_IN      | 0x16 |      |
+| BDS  |     CONNECT_CONSOLE_OUT      | 0x17 |      |
+| BDS  |       CONNECT_STD_ERR        | 0x18 |      |
+| BDS  |        CONNECT_USB_HC        | 0x19 |      |
+| BDS  |       CONNECT_USB_BUS        | 0x1A |      |
+| BDS  |      CONNECT_USB_DEVICE      | 0x1B |      |
+| BDS  |      NO_CONSOLE_ACTION       | 0x1C |      |
+| BDS  |   DISPLAY_LOGO_SYSTEM_INFO   | 0x1D |      |
+| BDS  |     START_IDE_CONTROLLER     | 0x1E |      |
+| BDS  |    START_SATA_CONTROLLER     | 0x1F |      |
+| BDS  |  START_ISA_ACPI_CONTROLLER   | 0x20 |      |
+| BDS  |        START_ISA_BUS         | 0x21 |      |
+| BDS  |        START_ISA_FDD         | 0x22 |      |
+| BDS  |       START_ISA_SEIRAL       | 0x23 |      |
+| BDS  |        START_IDE_BUS         | 0x24 |      |
+| BDS  |        START_AHCI_BUS        | 0x25 |      |
+| BDS  |      CONNECT_LEGACY_ROM      | 0x26 |      |
+| BDS  |  ENUMERATE_ALL_BOOT_OPTION   | 0x27 |      |
+| BDS  |    END_OF_BOOT_SELECTION     | 0x28 |      |
+| BDS  |         ENTER_SETUP          | 0x29 |      |
+| BDS  |      ENTER_BOOT_MANAGER      | 0x2A |      |
+| BDS  |      BOOT_DEVICE_SELECT      | 0x2B |      |
+| BDS  | EFI64_SHADOW_ALL_LEGACY_RO M | 0x2C |      |
+| BDS  |         ACPI_S3SAVE          | 0x2D |      |
+| BDS  |     READY_TO_BOOT_EVENT      | 0x2E |      |
+| BDS  |        GO_LEGACY_BOOT        | 0x2F |      |
+| BDS  |         GO_UEFI_BOOT         | 0x30 |      |
+| BDS  |   LEGACY16_PREPARE_TO_BOOT   | 0x31 |      |
+| BDS  |      EXIT_BOOT_SERVICES      | 0x32 |      |
+| BDS  |      LEGACY_BOOT_EVENT       | 0x33 |      |
+| BDS  |     ENTER_LEGACY_16_BOOT     | 0x34 |      |
+| BDS  |     RECOVERY_START_FLASH     | 0x35 |      |
+
+POST BDS
+
+|   阶段   |     功能名称     | 代码 | 说明 |
+| :------: | :--------------: | :--: | :--: |
+| POST_BDS |  NO_BOOT_DEVICE  | 0xF9 |      |
+| POST_BDS |   START_IMAGE    | 0xFB |      |
+| POST_BDS |   ENTER_INT19    | 0xFD |      |
+| POST_BDS | JUMP_BOOT_SECTOR | 0xFE |      |
+
+以下是 AMI BIOS 的启动过程，由于此 BIOS 过于古早，翻译部分弃坑
 
 <details>
 <summary>AMI BIOS启动过程 1991年2月 英文<a href="http://www.bioscentral.com/postcodes/amibios.htm">Ref:BIOSCentral</a></summary>
@@ -194,23 +345,12 @@ dateCreated: 2022-11-09T07:49:27.915Z
 
 </details>
 
-<details>
-<summary>InsydeH20 BIOS启动过程和诊断代码,多数现代BIOS遵循此标准<a href="https://zhuanlan.zhihu.com/p/560672681">Ref:BIOSCentral</a></summary>
-<br>
+# 参考文献
 
-SEC阶段，此阶段CPU还不能使用内存，通过将Cache配置为内存实现操作，
+未严格按照标准参考文献格式排版，见谅
 
-| 阶段 |        功能名称        | 代码 |                                                  说明                                                   |
-| :--: | :--------------------: | :--: | :-----------------------------------------------------------------------------------------------------: |
-| SEC  |    SYSTEM_POWER_ON     | 0x01 |                                        CPU 开机并切换到保护模式                                         |
-| SEC  | BEFORE_MICROCODE_PATCH | 0x02 |                      CPU 加载[微码](https://en.wikipedia.org/wiki/Intel_Microcode)                      |
-| SEC  | AFTER_MICROCODE_PATCH  | 0x03 |                                         微码加载进端间寄存器中                                          |
-| SEC  |       ACCESS_CSR       | 0x04 |                 初始[CSR 寄存器](https://en.wikipedia.org/wiki/Control/Status_Register)                 |
-| SEC  |    GENERIC_MSRINIT     | 0x05 | 初始化[MSR 寄存器](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) |
-| SEC  |      CPU_SPEEDCFG      | 0x06 |                        在 MSR 寄存器内配置 CPU 指令吞吐率(millisec/instruction)                         |
-| SEC  |      SETUP_CAR_OK      | 0x07 |                              (翻译存疑，暂时使用知乎翻译)缓存作为 RAM 测试                              |
-| SEC  |    FORCE_MAX_RATIO     | 0x08 |      (翻译存疑，暂时使用知乎翻译)将CPU频率设置为最大水平                                              |
-| SEC  |    GO_TO_SECSTARTUP    | 0x09 |        设置BIOS ROM缓存                                                         |
-| SEC  |     GO_TO_PEICORE      | 0x0A |      进入PEI阶段                                                  |
+Intel SDM 白皮书，没什么好说的，看的一知半解
+[Intel® 64 and IA-32 Architectures Software Developer Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html)
 
-</details>
+一款开源的 UEFI builder Spec,一样看的很懵.
+[EDK II Build Specification](https://edk2-docs.gitbook.io/edk-ii-build-specification/)
