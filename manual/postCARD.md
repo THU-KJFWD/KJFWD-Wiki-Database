@@ -107,15 +107,15 @@ PEI 阶段的 CPU_AP_INIT 阶段之前，处理器中只有一个核心作为 bo
 | :--: | :----------------------: | :--: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | PEI  |         SIO_INIT         | 0x70 |                                              [SIO](https://en.wikipedia.org/wiki/Super_I/O)初始化,包括热量,风扇                                               |
 | PEI  |       CPU_REG_INIT       | 0x71 |                                                                        CPU 早期初始化                                                                         |
-| PEI  |       CPU_AP_INIT        | 0x72 |              [application processors 初始化](https://wiki.osdev.org/Symmetric_Multiprocessing),[其他参考](https://zhuanlan.zhihu.com/p/67989330)              |
+| PEI  |       CPU_AP_INIT        | 0x72 |         [application processors 初始化](https://wiki.osdev.org/Symmetric_Multiprocessing),[这里有一些其他参考](https://zhuanlan.zhihu.com/p/67989330)         |
 | PEI  |       CPU_HT_RESET       | 0x73 |                           [HT 总线](https://en.wikipedia.org/wiki/HyperTransport)重置(注意于超线程区分,即使他就在 AP 初始化的下面)                            |
 | PEI  |      PCIE_MMIO_INIT      | 0x74 |                                                                 PCIE Memory Mapped IO 初始化                                                                  |
 | PEI  |       NB_REG_INIT        | 0x75 |                [北桥](<https://en.wikipedia.org/wiki/Northbridge_(computing)>)初始化(提一嘴，现在内存控制器都集成到 CPU 内部了，北桥已经无了)                 |
 | PEI  |       SB_REG_INIT        | 0x76 |               [南桥](<https://en.wikipedia.org/wiki/Southbridge_(computing)>)初始化(南桥多数功能也集成到 CPU 了,芯片组应该叫做平台控制器集线器)               |
-| PEI  |      PCIE_TRAINING       | 0x77 |                                            PCIE 链路训练,[ref](https://www.cnblogs.com/hammerqiu/p/10643692.html)                                             |
+| PEI  |      PCIE_TRAINING       | 0x77 |                              PCIE 链路训练,[为什么 PCIE 和 DDR 需要链路训练](https://www.cnblogs.com/hammerqiu/p/10643692.html)                               |
 | PEI  |         TPM_INIT         | 0x78 |                                              [TPM](https://en.wikipedia.org/wiki/Trusted_Platform_Module) 初始化                                              |
 | PEI  |        SMBUS_INIT        | 0x79 |                                       系统控制总线([SMBus](https://en.wikipedia.org/wiki/System_Management_Bus))初始化                                        |
-| PEI  |    PROGRAM_CLOCK_GEN     | 0x7A |               一些环形振荡器启动[瑞萨电子时钟发生器](https://www.renesas.cn/cn/zh/document/apn/rl78f13-f14-clock-generator-rev100?language=en)                |
+| PEI  |    PROGRAM_CLOCK_GEN     | 0x7A |                  一些环形振荡器启动[一些参考链接](https://www.renesas.cn/cn/zh/document/apn/rl78f13-f14-clock-generator-rev100?language=en)                   |
 | PEI  |    IGD_EARLY_INITIAL     | 0x7B |                                                                   处理器集成显卡早期初始化                                                                    |
 | PEI  |        HECI_INIT         | 0x7C |                                      [HECI](https://en.wikipedia.org/wiki/Host_Embedded_Controller_Interface)总线初始化                                       |
 | PEI  |      WATCHDOG_INIT       | 0x7D |                             [监控计时器](https://uefi.org/sites/default/files/resources/Watchdog%20Descriptor%20Table.pdf)初始化                              |
@@ -140,8 +140,7 @@ DXE(Drive Execution Environment)阶段中，大多数硬件完成初始化，之
 
 <details>
 <summary>EFI System Table是啥？</a></summary>
-<br>
-EFI System Table 由Active Console.EFI Boot Service Table,DXE service,Handle database和EFI Runtime Service Table,Version Information,System Configuration Table组成
+<br>EFI System Table 由Active Console.EFI Boot Service Table,DXE service,Handle database和EFI Runtime Service Table,Version Information,System Configuration Table组成
 和之前的部分在进入操作系统后就没用了，而和之后的部分在EFI引导的操作系统还是有用的，如果是Legacy引导则没有用
 </details>
 
@@ -154,7 +153,7 @@ EFI System Table 由Active Console.EFI Boot Service Table,DXE service,Handle dat
 | DXE  |       SMMACCESS       | 0x44 |                                                  设置 SMMACCESS 服务                                                   |
 | DXE  |        NB_INIT        | 0x45 |                                                   北桥中间阶段初始化                                                   |
 | DXE  |       SIO_INIT        | 0x46 |                                                 超级 IO 中间阶段初始化                                                 |
-| DXE  |     LEGACY_REGION     | 0x47 |                 设置传统内存区域,[一些参考](https://uefi.org/sites/default/files/resources/PI_Spec_1_6.pdf)                 |
+| DXE  |     LEGACY_REGION     | 0x47 |              设置传统内存区域,[一些参考](https://uefi.org/sites/default/files/resources/PI_Spec_1_6.pdf)               |
 | DXE  |        SB_INIT        | 0x48 |                                                   南桥中间阶段初始化                                                   |
 | DXE  | IDENTIFY_FLASH_DEVICE | 0x49 |                                                    识别 flash 设备                                                     |
 | DXE  |       FTW_INIT        | 0x4A |                                                       容错写验证                                                       |
@@ -183,7 +182,7 @@ EFI System Table 由Active Console.EFI Boot Service Table,DXE service,Handle dat
 
 #### BDS & POST BDS 阶段
 
-BDS阶段我们才进入到真正寻找操作系统这件事,从DXE dispatcher接管控制权后，需要链接磁盘，之后根据配置的变量去选择设备启动，如果启动失败则会返回到DXE dispatcher.
+BDS 阶段我们才进入到真正寻找操作系统这件事,从 DXE dispatcher 接管控制权后，需要链接磁盘，之后根据配置的变量去选择设备启动，如果启动失败则会返回到 DXE dispatcher.
 
 | 阶段 |          功能名称           | 代码 |                           说明                            |
 | :--: | :-------------------------: | :--: | :-------------------------------------------------------: |
