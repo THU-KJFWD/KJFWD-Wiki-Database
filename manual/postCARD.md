@@ -16,9 +16,16 @@ dateCreated: 2022-11-09T07:49:27.915Z
 
 从工作原理上来说，自 IBM PC 开始，计算机上引入了用于指示在系统启动期间状态或故障的 8bit 代码（也就是两个 HEX 数字，例如 A0），该代码会在电脑启动时发送到特定的 IO 接口（通常是 LPC、PCI、PCI-E 甚至 USB）
 
-> 说人话：你妈喊你早上起床，你迅速从脑子里过了一遍，今天有没有肚子疼、嗓子疼、腿疼、头疼，哦，原来今天轮到 jio 疼了，于是你给你妈说，妈，我脚疼！就接着睡了
+> 说人话：你妈喊你早上起床，你迅速从脑子里过了一遍，今天有没有肚子疼、嗓子疼、腿疼、头疼，哦，原来今天轮到 jio 疼了，于是你给你妈说，妈，我脚疼！就接着睡了。要是你仔细想了一圈，没啥不舒服的，就找找衣服袜子，全都穿好了再准备出门
 
-本文希望通过介绍诊断卡的使用，帮助大家了解现代 BIOS/UEFI 的启动过程，启动过程放在了诊断代码部分。
+本文希望通过介绍诊断卡的使用，帮助大家了解现代 UEFI 的启动过程，启动过程放在了诊断代码部分。讲道理用诊断卡肥肠简单，但是搞清楚背后是怎么个原理足够讲，，，一百篇这个体量的文章，所以你可以在这篇文章里看到很多的链接，请自备科学上网方式。
+
+### 一些你可能会感兴趣的内容
+
+1. BIOS 和 UEFI 的一些操作上的差别，文章并不完全严谨，但是很好理解[科普贴：BIOS 和 UEFI 的启动项](https://zhuanlan.zhihu.com/p/31365115)
+2. BIOS 和 UEFI 一些产生上的差别，普通用户似乎不必理会，但是为了避免一些术语上的理解错误，建议阅读[UEFI 引导与 传统 BIOS 引导在原理上有什么区别？芯片公司在其中扮演什么角色？](https://zhuanlan.zhihu.com/p/81960137)
+3. 老狼老师的知乎专栏，例如解释 microcode 的文章[Microcode 是什么？它为什么能修正 CPU 硬件错误？](https://zhuanlan.zhihu.com/p/86432216)
+4. 听说你想换掉你的电脑启动 logo？[如何更换 Windows 10 的启动 logo](https://zhuanlan.zhihu.com/p/28201533)
 
 # 诊断卡怎么用
 
@@ -76,7 +83,7 @@ dateCreated: 2022-11-09T07:49:27.915Z
 
 #### SEC 阶段
 
-此阶段 CPU 还不能使用内存，通过将 Cache 配置为内存实现操作，之后需要加载 PEI CORE 并验证，之后找到[BFV(Boot firmware volume)](https://edk2-docs.gitbook.io/edk-ii-minimum-platform-specification/appendix_a_full_maps/a1_firmware_volume_layout)(链接指向 EDKII,是一个[开源](https://github.com/tianocore/edk2)的 UEFI 开发环境)  
+此阶段 CPU 还不能使用内存，通过将 Cache 配置为内存实现操作，之后找到[BFV(Boot firmware volume)](https://edk2-docs.gitbook.io/edk-ii-minimum-platform-specification/appendix_a_full_maps/a1_firmware_volume_layout)(链接指向 EDKII,是一个[开源](https://github.com/tianocore/edk2)的 UEFI 开发环境),BFV 是首个被执行的 firmware volume，包含 PEI CORE 和 PEIM,完活后加载 PEI CORE 并验证.  
 为什么叫 Security 阶段呢？这一阶段作为后续操作系统的[信任根(RootOfTrust)](https://blog.csdn.net/weixin_49369227/article/details/120646358),作为系统启动的第一部分，只有 SEC 能被系统信任，以后的各个阶段才有被信任的基础。因此，大部分情况下 SEC 在转交控制权给 PEI 前要验证 PEI 是否可信。
 
 | 阶段 |        功能名称        | 代码 |                                                  说明                                                   |
@@ -94,128 +101,139 @@ dateCreated: 2022-11-09T07:49:27.915Z
 
 #### PEI 阶段
 
-PEI 阶段的 CPU_AP_INIT 阶段之前，处理器中只有一个核心作为 bootstrap processor,AP 阶段后,
+PEI 阶段的 CPU_AP_INIT 阶段之前，处理器中只有一个核心作为 bootstrap processor,AP 阶段后,才有其他核心作为 Application Processor 启动。PEI 阶段多数 code 仍然以 Cache 作为 RAM 执行，
 
-| 阶段 |         功能名称         | 代码 |                                                                说明                                                                 |
-| :--: | :----------------------: | :--: | :---------------------------------------------------------------------------------------------------------------------------------: |
-| PEI  |         SIO_INIT         | 0x70 |                                 [SIO](https://en.wikipedia.org/wiki/Super_I/O)初始化,包括热量,风扇                                  |
-| PEI  |       CPU_REG_INIT       | 0x71 |                                                           CPU 早期初始化                                                            |
-| PEI  |       CPU_AP_INIT        | 0x72 | [application processors 初始化](https://wiki.osdev.org/Symmetric_Multiprocessing),[其他参考](https://zhuanlan.zhihu.com/p/67989330) |
-| PEI  |       CPU_HT_RESET       | 0x73 |              [HT 总线](https://en.wikipedia.org/wiki/HyperTransport)重置(注意于超线程区分,即使他就在 AP 初始化的下面)               |
-| PEI  |      PCIE_MMIO_INIT      | 0x74 |                                                    PCIE Memory Mapped IO 初始化                                                     |
-| PEI  |       NB_REG_INIT        | 0x75 |                                                                                                                                     |
-| PEI  |       SB_REG_INIT        | 0x76 |                                                                                                                                     |
-| PEI  |      PCIE_TRAINING       | 0x77 |                                                                                                                                     |
-| PEI  |         TPM_INIT         | 0x78 |                                                                                                                                     |
-| PEI  |        SMBUS_INIT        | 0x79 |                                                                                                                                     |
-| PEI  |    PROGRAM_CLOCK_GEN     | 0x7A |                                                                                                                                     |
-| PEI  |    IGD_EARLY_INITIAL     | 0x7B |                                                                                                                                     |
-| PEI  |        HECI_INIT         | 0x7C |                                                                                                                                     |
-| PEI  |      WATCHDOG_INIT       | 0x7D |                                                                                                                                     |
-| PEI  |       MEMORY_INIT        | 0x7E |                                                                                                                                     |
-| PEI  |  MEMORY_INIT_FOR_CRISIS  | 0x7F |                                                                                                                                     |
-| PEI  |      MEMORY_INSTALL      | 0x80 |                                                                                                                                     |
-| PEI  |          TXTPEI          | 0x81 |                                                                                                                                     |
-| PEI  |       SWTTCH_STACK       | 0x82 |                                                                                                                                     |
-| PEI  |       MEMORY_STACK       | 0x83 |                                                                                                                                     |
-| PEI  |   ENTER_RECOVERY_MODE    | 0x84 |                                                                                                                                     |
-| PEI  |   RECOVERY_MEDIA_MODE    | 0x85 |                                                                                                                                     |
-| PEI  | RECOVERY_MEDIA_NOT_FOUND | 0x86 |                                                                                                                                     |
-| PEI  | RECOVERY_LOAD_FILE_DONE  | 0x87 |                                                                                                                                     |
-| PEI  |   RECOVERY_START_FLASH   | 0x88 |                                                                                                                                     |
-| PEI  |     PEI_ENTER_DXEIPL     | 0x89 |                                                                                                                                     |
-| PEI  |     FINDING_DXE_CORE     | 0x8A |                                                                                                                                     |
-| PEI  |      GO_TO_DXE_CORE      | 0x8B |                                                                                                                                     |
+| 阶段 |         功能名称         | 代码 |                                                                             说明                                                                              |
+| :--: | :----------------------: | :--: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| PEI  |         SIO_INIT         | 0x70 |                                              [SIO](https://en.wikipedia.org/wiki/Super_I/O)初始化,包括热量,风扇                                               |
+| PEI  |       CPU_REG_INIT       | 0x71 |                                                                        CPU 早期初始化                                                                         |
+| PEI  |       CPU_AP_INIT        | 0x72 |              [application processors 初始化](https://wiki.osdev.org/Symmetric_Multiprocessing),[其他参考](https://zhuanlan.zhihu.com/p/67989330)              |
+| PEI  |       CPU_HT_RESET       | 0x73 |                           [HT 总线](https://en.wikipedia.org/wiki/HyperTransport)重置(注意于超线程区分,即使他就在 AP 初始化的下面)                            |
+| PEI  |      PCIE_MMIO_INIT      | 0x74 |                                                                 PCIE Memory Mapped IO 初始化                                                                  |
+| PEI  |       NB_REG_INIT        | 0x75 |                [北桥](<https://en.wikipedia.org/wiki/Northbridge_(computing)>)初始化(提一嘴，现在内存控制器都集成到 CPU 内部了，北桥已经无了)                 |
+| PEI  |       SB_REG_INIT        | 0x76 |               [南桥](<https://en.wikipedia.org/wiki/Southbridge_(computing)>)初始化(南桥多数功能也集成到 CPU 了,芯片组应该叫做平台控制器集线器)               |
+| PEI  |      PCIE_TRAINING       | 0x77 |                                            PCIE 链路训练,[ref](https://www.cnblogs.com/hammerqiu/p/10643692.html)                                             |
+| PEI  |         TPM_INIT         | 0x78 |                                              [TPM](https://en.wikipedia.org/wiki/Trusted_Platform_Module) 初始化                                              |
+| PEI  |        SMBUS_INIT        | 0x79 |                                       系统控制总线([SMBus](https://en.wikipedia.org/wiki/System_Management_Bus))初始化                                        |
+| PEI  |    PROGRAM_CLOCK_GEN     | 0x7A |               一些环形振荡器启动[瑞萨电子时钟发生器](https://www.renesas.cn/cn/zh/document/apn/rl78f13-f14-clock-generator-rev100?language=en)                |
+| PEI  |    IGD_EARLY_INITIAL     | 0x7B |                                                                   处理器集成显卡早期初始化                                                                    |
+| PEI  |        HECI_INIT         | 0x7C |                                      [HECI](https://en.wikipedia.org/wiki/Host_Embedded_Controller_Interface)总线初始化                                       |
+| PEI  |      WATCHDOG_INIT       | 0x7D |                             [监控计时器](https://uefi.org/sites/default/files/resources/Watchdog%20Descriptor%20Table.pdf)初始化                              |
+| PEI  |       MEMORY_INIT        | 0x7E |                                                                          内存初始化                                                                           |
+| PEI  |  MEMORY_INIT_FOR_CRISIS  | 0x7F |                                                                 电脑寄了之后重启的内存初始化                                                                  |
+| PEI  |      MEMORY_INSTALL      | 0x80 |                                                                    简单的内存测试(微星:易)                                                                    |
+| PEI  |          TXTPEI          | 0x81 | [intel TXT](https://www.intel.com/content/www/us/en/developer/articles/guide/intel-trusted-execution-technology-intel-txt-enabling-guide.html) 功能早期初始化 |
+| PEI  |       SWTTCH_STACK       | 0x82 |                                                                  开始配置 DRAM 作为内存使用                                                                   |
+| PEI  |       MEMORY_STACK       | 0x83 |                                                                    将 DRAM 配置为缓存使用                                                                     |
+| PEI  |   ENTER_RECOVERY_MODE    | 0x84 |                   恢复设备初始化,此处为[BIOS 的恢复](https://www.supermicro.com/manuals/other/UEFI_BIOS_Recovery.pdf),注意与系统的恢复区分                    |
+| PEI  |   RECOVERY_MEDIA_MODE    | 0x85 |                                                                         找到恢复镜像                                                                          |
+| PEI  | RECOVERY_MEDIA_NOT_FOUND | 0x86 |                                                                        找不到恢复镜像                                                                         |
+| PEI  | RECOVERY_LOAD_FILE_DONE  | 0x87 |                                                                       加载恢复镜像完成                                                                        |
+| PEI  |   RECOVERY_START_FLASH   | 0x88 |                                                                     启动 flash BIOS 功能                                                                      |
+| PEI  |     PEI_ENTER_DXEIPL     | 0x89 |                                                                    将 BIOS 镜像加载到 RAM                                                                     |
+| PEI  |     FINDING_DXE_CORE     | 0x8A |                                                                         寻找 DXE 内核                                                                         |
+| PEI  |      GO_TO_DXE_CORE      | 0x8B |                                                                         进入 DXE 内核                                                                         |
 
 #### DXE 阶段
 
-| 阶段 |       功能名称        | 代码 | 说明 |
-| :--: | :-------------------: | :--: | :--: |
-| DXE  |        TCGDXE         | 0x40 |      |
-| DXE  |      SB_SPI_INIT      | 0x41 |      |
-| DXE  |       CF9_RESET       | 0x42 |      |
-| DXE  |  SB_SERIAL_GPIO_INIT  | 0x43 |      |
-| DXE  |       SMMACCESS       | 0x44 |      |
-| DXE  |        NB_INIT        | 0x45 |      |
-| DXE  |       SIO_INIT        | 0x46 |      |
-| DXE  |     LEGACY_REGION     | 0x47 |      |
-| DXE  |        SB_INIT        | 0x48 |      |
-| DXE  | IDENTIFY_FLASH_DEVICE | 0x49 |      |
-| DXE  |       FTW_INIT        | 0x4A |      |
-| DXE  |     VARIABLE_INIT     | 0x4B |      |
-| DXE  |  VARIABLE_INIT_FAIL   | 0x4C |      |
-| DXE  |       MTC_INIT        | 0x4D |      |
-| DXE  |       CPU_INIT        | 0x4E |      |
-| DXE  |      MP_CPU_INIT      | 0x4F |      |
-| DXE  |      SMBUS_INIT       | 0x50 |      |
-| DXE  |   SMART_TIMER_INIT    | 0x51 |      |
-| DXE  |      PCRTC_INIT       | 0x52 |      |
-| DXE  |       SATA_INIT       | 0x53 |      |
-| DXE  |  SMM_CONTROLER_INIT   | 0x54 |      |
-| DXE  |   LEGACY_INTERRUPT    | 0x55 |      |
-| DXE  |    RELOCATE_SMBASE    | 0x56 |      |
-| DXE  |       FIRST_SMI       | 0x57 |      |
-| DXE  |       VTD_INIT        | 0x58 |      |
-| DXE  |   BEFORE_CSM16_INIT   | 0x59 |      |
-| DXE  |   AFTER_CSM16_INIT    | 0x5A |      |
-| DXE  |    LOAD_ACPI_TABLE    | 0x5B |      |
-| DXE  |      SB_DISPATCH      | 0x5C |      |
-| DXE  |    SB_IOTRAP_INIT     | 0x5D |      |
-| DXE  |    SUBCLASS_DRIVER    | 0x5E |      |
-| DXE  |       PPM_INIT        | 0x5F |      |
-| DXE  |     HECIDRV_INIT      | 0x60 |      |
+DXE(Drive Execution Environment)阶段中，大多数硬件完成初始化，之后产生 EFI system table,提供各种 service 给后续阶段使用。最后由 DXE dispatcher 把控制权移交给 BDS 阶段来启动操作系统。
+
+<details>
+<summary>EFI System Table是啥？</a></summary>
+<br>
+EFI System Table 由Active Console.EFI Boot Service Table,DXE service,Handle database和EFI Runtime Service Table,Version Information,System Configuration Table组成
+和之前的部分在进入操作系统后就没用了，而和之后的部分在EFI引导的操作系统还是有用的，如果是Legacy引导则没有用
+</details>
+
+| 阶段 |       功能名称        | 代码 |                                                          说明                                                          |
+| :--: | :-------------------: | :--: | :--------------------------------------------------------------------------------------------------------------------: |
+| DXE  |        TCGDXE         | 0x40 |                                                 DXE 阶段的 TPM 初始化                                                  |
+| DXE  |      SB_SPI_INIT      | 0x41 |                                                    南桥 SPI 初始化                                                     |
+| DXE  |       CF9_RESET       | 0x42 |                                    设置重置服务(翻译存疑,原文 Setup Reset Service)                                     |
+| DXE  |  SB_SERIAL_GPIO_INIT  | 0x43 |                                                    南桥 GPIO 初始化                                                    |
+| DXE  |       SMMACCESS       | 0x44 |                                                  设置 SMMACCESS 服务                                                   |
+| DXE  |        NB_INIT        | 0x45 |                                                   北桥中间阶段初始化                                                   |
+| DXE  |       SIO_INIT        | 0x46 |                                                 超级 IO 中间阶段初始化                                                 |
+| DXE  |     LEGACY_REGION     | 0x47 |                 设置传统内存区域,[一些参考](https://uefi.org/sites/default/files/resources/PI_Spec_1_6.pdf)                 |
+| DXE  |        SB_INIT        | 0x48 |                                                   南桥中间阶段初始化                                                   |
+| DXE  | IDENTIFY_FLASH_DEVICE | 0x49 |                                                    识别 flash 设备                                                     |
+| DXE  |       FTW_INIT        | 0x4A |                                                       容错写验证                                                       |
+| DXE  |     VARIABLE_INIT     | 0x4B |                                                     变量服务初始化                                                     |
+| DXE  |  VARIABLE_INIT_FAIL   | 0x4C |                                                   初始化变量服务失败                                                   |
+| DXE  |       MTC_INIT        | 0x4D |                                                       MTC 初始化                                                       |
+| DXE  |       CPU_INIT        | 0x4E |                                                   CPU 中间阶段初始化                                                   |
+| DXE  |      MP_CPU_INIT      | 0x4F |                                                 多处理器中间阶段初始化                                                 |
+| DXE  |      SMBUS_INIT       | 0x50 |                                                  SMBus 驱动程序初始化                                                  |
+| DXE  |   SMART_TIMER_INIT    | 0x51 |                                [8259](https://en.wikipedia.org/wiki/Intel_8259) 初始化                                 |
+| DXE  |      PCRTC_INIT       | 0x52 |                  [RTC](https://zh.m.wikipedia.org/zh-hk/%E5%AF%A6%E6%99%82%E6%99%82%E9%90%98) 初始化                   |
+| DXE  |       SATA_INIT       | 0x53 |                                                   SATA 控制器初始化                                                    |
+| DXE  |  SMM_CONTROLER_INIT   | 0x54 |               [SMM 控制器](https://zh.m.wikipedia.org/zh-hk/%E5%AF%A6%E6%99%82%E6%99%82%E9%90%98)初始化                |
+| DXE  |   LEGACY_INTERRUPT    | 0x55 |                                                      传统中断服务                                                      |
+| DXE  |    RELOCATE_SMBASE    | 0x56 |                                                      迁移 SMMBASE                                                      |
+| DXE  |       FIRST_SMI       | 0x57 |                                           SMI 测试(参考上文 smm 控制器部分)                                            |
+| DXE  |       VTD_INIT        | 0x58 |                                     VTD 初始化(注意与 intel 的 VT-xCPU 虚拟化区别)                                     |
+| DXE  |   BEFORE_CSM16_INIT   | 0x59 |                                    传统 BIOS 初始化(看到 CSM 就知道这不是个好同志)                                     |
+| DXE  |   AFTER_CSM16_INIT    | 0x5A |                                                   传统中断功能初始化                                                   |
+| DXE  |    LOAD_ACPI_TABLE    | 0x5B |                                                     ACPI 表初始化                                                      |
+| DXE  |      SB_DISPATCH      | 0x5C |                                              南桥 SMM dispatch 服务初始化                                              |
+| DXE  |    SB_IOTRAP_INIT     | 0x5D |                                                 南桥 IOTRAP 服务初始化                                                 |
+| DXE  |    SUBCLASS_DRIVER    | 0x5E |                                                      建立 AMT 表                                                       |
+| DXE  |       PPM_INIT        | 0x5F |                                                       PPM 初始化                                                       |
+| DXE  |     HECIDRV_INIT      | 0x60 | [HECI](https://en.wikipedia.org/wiki/Host_Embedded_Controller_Interface)DRV(Host Embedded Controller Interface) 初始化 |
 
 #### BDS & POST BDS 阶段
 
-| 阶段 |           功能名称           | 代码 | 说明 |
-| :--: | :--------------------------: | :--: | :--: |
-| BDS  |          ENTER_BDS           | 0x10 |      |
-| BDS  |        INSTALL_HOTKEY        | 0x11 |      |
-| BDS  |           ASF_INIT           | 0x12 |      |
-| BDS  |    PCI_ENUMERATION_START     | 0x13 |      |
-| BDS  |     BEFORE_PCIIO_INSTALL     | 0x14 |      |
-| BDS  |     PCI_ENUMERATION_END      | 0x15 |      |
-| BDS  |      CONNECT_CONSOLE_IN      | 0x16 |      |
-| BDS  |     CONNECT_CONSOLE_OUT      | 0x17 |      |
-| BDS  |       CONNECT_STD_ERR        | 0x18 |      |
-| BDS  |        CONNECT_USB_HC        | 0x19 |      |
-| BDS  |       CONNECT_USB_BUS        | 0x1A |      |
-| BDS  |      CONNECT_USB_DEVICE      | 0x1B |      |
-| BDS  |      NO_CONSOLE_ACTION       | 0x1C |      |
-| BDS  |   DISPLAY_LOGO_SYSTEM_INFO   | 0x1D |      |
-| BDS  |     START_IDE_CONTROLLER     | 0x1E |      |
-| BDS  |    START_SATA_CONTROLLER     | 0x1F |      |
-| BDS  |  START_ISA_ACPI_CONTROLLER   | 0x20 |      |
-| BDS  |        START_ISA_BUS         | 0x21 |      |
-| BDS  |        START_ISA_FDD         | 0x22 |      |
-| BDS  |       START_ISA_SEIRAL       | 0x23 |      |
-| BDS  |        START_IDE_BUS         | 0x24 |      |
-| BDS  |        START_AHCI_BUS        | 0x25 |      |
-| BDS  |      CONNECT_LEGACY_ROM      | 0x26 |      |
-| BDS  |  ENUMERATE_ALL_BOOT_OPTION   | 0x27 |      |
-| BDS  |    END_OF_BOOT_SELECTION     | 0x28 |      |
-| BDS  |         ENTER_SETUP          | 0x29 |      |
-| BDS  |      ENTER_BOOT_MANAGER      | 0x2A |      |
-| BDS  |      BOOT_DEVICE_SELECT      | 0x2B |      |
-| BDS  | EFI64_SHADOW_ALL_LEGACY_RO M | 0x2C |      |
-| BDS  |         ACPI_S3SAVE          | 0x2D |      |
-| BDS  |     READY_TO_BOOT_EVENT      | 0x2E |      |
-| BDS  |        GO_LEGACY_BOOT        | 0x2F |      |
-| BDS  |         GO_UEFI_BOOT         | 0x30 |      |
-| BDS  |   LEGACY16_PREPARE_TO_BOOT   | 0x31 |      |
-| BDS  |      EXIT_BOOT_SERVICES      | 0x32 |      |
-| BDS  |      LEGACY_BOOT_EVENT       | 0x33 |      |
-| BDS  |     ENTER_LEGACY_16_BOOT     | 0x34 |      |
-| BDS  |     RECOVERY_START_FLASH     | 0x35 |      |
+BDS阶段我们才进入到真正寻找操作系统这件事,从DXE dispatcher接管控制权后，需要链接磁盘，之后根据配置的变量去选择设备启动，如果启动失败则会返回到DXE dispatcher.
+
+| 阶段 |          功能名称           | 代码 |                           说明                            |
+| :--: | :-------------------------: | :--: | :-------------------------------------------------------: |
+| BDS  |          ENTER_BDS          | 0x10 |                       进入 BDS 阶段                       |
+| BDS  |       INSTALL_HOTKEY        | 0x11 |                      安装快捷键服务                       |
+| BDS  |          ASF_INIT           | 0x12 |                        ASF 初始化                         |
+| BDS  |    PCI_ENUMERATION_START    | 0x13 |                         PCI 枚举                          |
+| BDS  |    BEFORE_PCIIO_INSTALL     | 0x14 |                     PCI 资源分配完毕                      |
+| BDS  |     PCI_ENUMERATION_END     | 0x15 |                       PCI 枚举完成                        |
+| BDS  |     CONNECT_CONSOLE_IN      | 0x16 |        键盘鼠标初始化(没错!现在才有键盘鼠标的事情)        |
+| BDS  |     CONNECT_CONSOLE_OUT     | 0x17 |                      视频设备初始化                       |
+| BDS  |       CONNECT_STD_ERR       | 0x18 |                    错误报告设备初始化                     |
+| BDS  |       CONNECT_USB_HC        | 0x19 |                   USB 主机控制器初始化                    |
+| BDS  |       CONNECT_USB_BUS       | 0x1A |                    USB 总线驱动初始化                     |
+| BDS  |     CONNECT_USB_DEVICE      | 0x1B |                       USB 设备链接                        |
+| BDS  |      NO_CONSOLE_ACTION      | 0x1C |                   控制台设备初始化失败                    |
+| BDS  |  DISPLAY_LOGO_SYSTEM_INFO   | 0x1D |                         显示 logo                         |
+| BDS  |    START_IDE_CONTROLLER     | 0x1E |                     IDE 控制器初始化                      |
+| BDS  |    START_SATA_CONTROLLER    | 0x1F |                     SATA 控制器初始化                     |
+| BDS  |  START_ISA_ACPI_CONTROLLER  | 0x20 |                     SIO 控制器初始化                      |
+| BDS  |        START_ISA_BUS        | 0x21 |                  ISA 总线驱动程序初始化                   |
+| BDS  |        START_ISA_FDD        | 0x22 |                      软盘设备初始化                       |
+| BDS  |      START_ISA_SEIRAL       | 0x23 |                        串口初始化                         |
+| BDS  |        START_IDE_BUS        | 0x24 |                      IDE 设备初始化                       |
+| BDS  |       START_AHCI_BUS        | 0x25 |                      AHCI 设备初始化                      |
+| BDS  |     CONNECT_LEGACY_ROM      | 0x26 | 调度[备用 ROMs](https://en.wikipedia.org/wiki/Option_ROM) |
+| BDS  |  ENUMERATE_ALL_BOOT_OPTION  | 0x27 |                  获得所有启动设备的信息                   |
+| BDS  |    END_OF_BOOT_SELECTION    | 0x28 |                      启动项选择结束                       |
+| BDS  |         ENTER_SETUP         | 0x29 |                       进入设置菜单                        |
+| BDS  |     ENTER_BOOT_MANAGER      | 0x2A |                     进入引导项管理器                      |
+| BDS  |     BOOT_DEVICE_SELECT      | 0x2B |                     尝试引导操作系统                      |
+| BDS  | EFI64_SHADOW_ALL_LEGACY_ROM | 0x2C |                     尝试驱动其他 ROM                      |
+| BDS  |         ACPI_S3SAVE         | 0x2D |            将 S3 睡眠所需的数据保存在 DRAM 中             |
+| BDS  |     READY_TO_BOOT_EVENT     | 0x2E |                   准备好进入操作系统力!                   |
+| BDS  |       GO_LEGACY_BOOT        | 0x2F |                  legacy 模式引导操作系统                  |
+| BDS  |        GO_UEFI_BOOT         | 0x30 |                   UEFI 模式引导操作系统                   |
+| BDS  |  LEGACY16_PREPARE_TO_BOOT   | 0x31 |                  legacy 模式启动操作系统                  |
+| BDS  |     EXIT_BOOT_SERVICES      | 0x32 |            通过 HECI 向 ME 发送 POST 过程结束             |
+| BDS  |      LEGACY_BOOT_EVENT      | 0x33 |      legacy 模式进入操作系统前的最后一次芯片组初始化      |
+| BDS  |    ENTER_LEGACY_16_BOOT     | 0x34 |                legacy 模式顺利启动操作系统                |
+| BDS  |    RECOVERY_START_FLASH     | 0x35 |                       BIOS 开始刷写                       |
 
 POST BDS
 
-|   阶段   |     功能名称     | 代码 | 说明 |
-| :------: | :--------------: | :--: | :--: |
-| POST_BDS |  NO_BOOT_DEVICE  | 0xF9 |      |
-| POST_BDS |   START_IMAGE    | 0xFB |      |
-| POST_BDS |   ENTER_INT19    | 0xFD |      |
-| POST_BDS | JUMP_BOOT_SECTOR | 0xFE |      |
+|   阶段   |     功能名称     | 代码 |                                  说明                                   |
+| :------: | :--------------: | :--: | :---------------------------------------------------------------------: |
+| POST_BDS |  NO_BOOT_DEVICE  | 0xF9 |                              没得启动设备                               |
+| POST_BDS |   START_IMAGE    | 0xFB |                              UEFI 引导镜像                              |
+| POST_BDS |   ENTER_INT19    | 0xFD | 旧版 [INT19](http://blog.chinaunix.net/uid-480653-id-2114769.html) 入口 |
+| POST_BDS | JUMP_BOOT_SECTOR | 0xFE |                           尝试使用 INT19 启动                           |
 
 以下是 AMI BIOS 的启动过程，由于此 BIOS 过于古早，翻译部分弃坑
 
@@ -252,7 +270,7 @@ POST BDS
   
 </details>
 
-以下是 AMI BIOS 代码对应的含义参考，翻译在做了.jpg
+以下是 AMI BIOS 代码对应的含义参考，由于此 BIOS 过于古早，翻译部分弃坑
 
 <details>
 <summary>AMI BIOS Post Codes (After April 1990): <a href="http://www.bioscentral.com/postcodes/amibios.htm">Ref:BIOSCentral</a></summary>
@@ -354,3 +372,9 @@ Intel SDM 白皮书，没什么好说的，看的一知半解
 
 一款开源的 UEFI builder Spec,一样看的很懵.
 [EDK II Build Specification](https://edk2-docs.gitbook.io/edk-ii-build-specification/)
+
+UEFI 官方文档
+[UEFI Specification 2.10](https://uefi.org/specs/UEFI/2.10/index.html#)
+
+宏碁的某款笔记本说明书
+[ACER 522 用户手册](https://manualsbrain.com/zh/manuals/1197982)
