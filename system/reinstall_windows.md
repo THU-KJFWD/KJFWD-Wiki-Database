@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-11-30T06:17:49.142Z
+date: 2022-11-30T06:18:27.189Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -39,6 +39,16 @@ dateCreated: 2022-11-30T05:50:38.526Z
 
 ### 第三方安装器
 
+### Windows引导补充知识
+
+- EFI与Legacy引导
+	- MBR与GPT分区表
+- 四个常见分区
+  - EFI分区（启动分区，100MB，无需手动创建/删除）
+  - MSR分区（系统保留，16MB~128MB，无需手动创建/删除）
+  - 系统盘（可占满剩余空间，推荐100G以上）
+  - 恢复分区（500~600MB，无需手动创建/删除）包含Windows恢复环境
+
 ### 常见bug集锦
 
 - 无法关闭Secure Boot
@@ -49,13 +59,5 @@ dateCreated: 2022-11-30T05:50:38.526Z
 	- 读不出硬盘
   - 只能安装到GPT磁盘
   - 磁盘可能很快会出现故障
-
-### Windows引导补充知识
-
-- EFI与Legacy引导
-	- MBR与GPT分区表
-- 四个常见分区
-  - EFI分区（启动分区，100MB，无需手动创建/删除）
-  - MSR分区（系统保留，16MB~128MB，无需手动创建/删除）
-  - 系统盘（可占满剩余空间，推荐100G以上）
-  - 恢复分区（500~600MB，无需手动创建/删除）包含Windows恢复环境
+  
+- BitLocker
