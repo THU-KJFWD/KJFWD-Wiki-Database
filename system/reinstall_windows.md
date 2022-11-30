@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-11-30T05:56:13.199Z
+date: 2022-11-30T06:04:48.888Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -22,7 +22,9 @@ dateCreated: 2022-11-30T05:50:38.526Z
 
 ### 常见bug集锦
 
-#### 引导类问题
+- 无法关闭Secure Boot
+	- BIOS无选项
+	- Linpus lite boot failed
 
 #### 安装程序出错
 
