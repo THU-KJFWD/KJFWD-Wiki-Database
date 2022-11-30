@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-11-30T06:12:16.922Z
+date: 2022-11-30T06:12:21.773Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -37,6 +37,6 @@ dateCreated: 2022-11-30T05:50:38.526Z
 
 ### Windows引导补充知识
 
-- EFI与Legacy
+- EFI与Legacy引导
 	- MBR与GPT分区表
 - 各分区
