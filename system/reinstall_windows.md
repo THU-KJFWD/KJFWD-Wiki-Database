@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-11-30T06:18:51.589Z
+date: 2022-11-30T06:18:59.063Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -32,7 +32,7 @@ dateCreated: 2022-11-30T05:50:38.526Z
 ### 进桌面后
 
 - 网络校时
-- 激活
+- 系统激活
 
 ## 补充知识
 
