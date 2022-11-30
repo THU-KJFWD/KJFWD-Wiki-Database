@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-11-30T06:18:59.063Z
+date: 2022-11-30T06:19:09.111Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -62,3 +62,6 @@ dateCreated: 2022-11-30T05:50:38.526Z
   - 磁盘可能很快会出现故障
   
 - BitLocker
+
+
+## 致谢
