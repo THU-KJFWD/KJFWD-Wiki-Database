@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-11-30T06:13:13.450Z
+date: 2022-11-30T06:15:17.503Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -40,7 +40,7 @@ dateCreated: 2022-11-30T05:50:38.526Z
 - EFI与Legacy引导
 	- MBR与GPT分区表
 - 四个常见分区
-	- EFI
-  - MSR
-  - 系统分区 C:
-  - 恢复分区
+  - EFI分区（启动分区，100MB，无需手动创建/删除）
+  - MSR分区（系统保留，16MB~128MB，无需手动创建/删除）
+  - 系统盘（可占满剩余空间，推荐100G以上）
+  - 恢复分区（500~600MB，无需手动创建/删除）包含Windows恢复环境
