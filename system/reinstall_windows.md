@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-11-30T06:09:37.726Z
+date: 2022-11-30T06:12:16.922Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -35,4 +35,8 @@ dateCreated: 2022-11-30T05:50:38.526Z
   - 只能安装到GPT磁盘
   - 磁盘可能很快会出现故障
 
-### Windows引导
+### Windows引导补充知识
+
+- EFI与Legacy
+	- MBR与GPT分区表
+- 各分区
