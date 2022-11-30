@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-11-30T06:08:12.188Z
+date: 2022-11-30T06:08:30.128Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -32,5 +32,6 @@ dateCreated: 2022-11-30T05:50:38.526Z
 - 安装程序出错
 	- 读不出硬盘
   - 只能安装到GPT磁盘
+  - 磁盘可能很快会出现故障
 
 ### Windows引导
