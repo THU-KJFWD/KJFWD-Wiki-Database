@@ -2,8 +2,8 @@
 title: 中期考核内容、考核标准
 description: 不会啊，怎么办
 published: true
-date: 2022-11-24T04:54:22.578Z
-tags:
+date: 2022-12-02T05:53:55.328Z
+tags: 
 editor: markdown
 dateCreated: 2022-11-15T06:49:33.720Z
 ---
@@ -123,9 +123,10 @@ dateCreated: 2022-11-15T06:49:33.720Z
 
 ## 考核内容
 
-1. 安装[zerotier](https://www.zerotier.com/download/),安装教程参考链接,无需创建账号,安装完成后链接到如下网络 ID,并反馈自己的 Node Address 给监考.
+1. 安装[zerotier](https://www.zerotier.com/download/),安装教程参考链接,无需创建账号,安装完成后根据监考员确定网络 ID,并链接之,并反馈自己的 Node Address 给监考.
 
-   > network ID:e5cd7a9e1c1f07ea
+   > 监考 王浩萌:  network ID:e5cd7a9e1c1f07ea
+   > 监考 张钧:    network ID:a0cbf4b62a49f43f
 
 2. 稍等片刻即可建立完成虚拟局域网,访问此[链接](https://192.168.195.33:8006/),根据监考员给出的用户名和密码登录.注意语言和域的选择.
    ![login](img/mid_login.jpg)
