@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-12-03T04:16:50.524Z
+date: 2022-12-03T10:52:17.061Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -11,7 +11,7 @@ dateCreated: 2022-11-30T05:50:38.526Z
 # Windows系统重装
 
 ## 前言
-重装Windows
+由于Windows系统的特性，
 
 ## 重装步骤
 
