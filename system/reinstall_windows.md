@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-12-19T14:10:22.435Z
+date: 2022-12-19T14:12:39.836Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -26,8 +26,6 @@ Windows系统在长期使用后往往出现问题。系统特性使然，完美�
 > **数据无价**，注意备份！这是重装的最大风险。
 即使选择“保留文件”，仍然**强烈建议**提前备份重要内容。
 {.is-warning}
-
-### 准备工作
 
 ### 备份数据
 - 主要备份：**系统盘数据**（Windows安装分区）
@@ -66,19 +64,20 @@ Windows系统在长期使用后往往出现问题。系统特性使然，完美�
 
 ### 常见bug集锦
 
-- 无法关闭Secure Boot
+- **无法关闭Secure Boot**
 	- BIOS无选项
 	- Linpus lite boot failed
 
-- 安装程序出错
+- **安装程序出错**
 	- 读不出硬盘
   - 只能安装到GPT磁盘
   - 磁盘可能很快会出现故障
   
-- BitLocker：Windows磁盘加密功能
+- **BitLocker**：Windows磁盘加密功能，很多新笔记本默认开启
   - 主系统无法登陆，影响数据备份
   - 数据盘（如D:）被加密，重装后无法自动解密
-  - 解密方法：[登陆微软账户](https://account.microsoft.com/devices/recoverykey)，查看在线保存的密钥
+  - 密钥：[登陆微软账户查看](https://account.microsoft.com/devices/recoverykey)
+  - 命令行关闭（管理员）：`manage-bde –off C:`
 
 ## 致谢
 本教程基于多位同学的重装技术培训资料改编而成，特此致谢。具体名单包括：
