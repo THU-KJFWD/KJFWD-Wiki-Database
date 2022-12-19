@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-12-19T14:20:15.402Z
+date: 2022-12-19T14:20:40.433Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -43,7 +43,7 @@ Windows系统在长期使用后往往出现问题。系统特性使然，完美�
     - 开机，按特定键进BIOS，按键一般为<kbd>F2</kbd> / <kbd>F10</kbd> / <kbd>Delete</kbd>
     - 关闭**安全启动**（Secure Boot）
     - 修改启动顺序，USB HDD放第一位
-2. U盘引导：选择需要安装的Windows 10/11镜像（一般选择64位中文版）
+2. U盘引导：选择需要安装的Windows 10/11镜像（一般选择**64位中文版**）
 
 ### 安装程序
 
