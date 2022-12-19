@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-12-19T13:33:04.182Z
+date: 2022-12-19T13:33:15.527Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -19,7 +19,7 @@ Windows系统在长期使用后往往出现问题。系统特性使然，完美�
 
 重新安装Windows时，存在两项主要选择（详情请查阅[微软官方文档](https://support.microsoft.com/zh-cn/windows/%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85-windows-d8369486-3e33-7d9c-dccc-859e2b022fc7#WindowsVersion=Windows_11)）
 1. **重置系统 / 安装媒体重新安装**：系统未明显损坏，可以考虑重置。
-2. **保留个人文件 / 删除所有内容**：系统盘空间较多，可以考虑保留文件。
+2. **保留个人文件 / 删除所有内容**：系统盘空余空间足够，可以考虑保留文件。
 
 > 数据无价，注意备份！即使选择“保留”，仍需自行备份重要内容。
 {.is-warning}
