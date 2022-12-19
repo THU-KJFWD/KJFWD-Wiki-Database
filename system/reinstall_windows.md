@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-12-19T14:18:26.004Z
+date: 2022-12-19T14:20:15.402Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -36,6 +36,8 @@ Windows系统在长期使用后往往出现问题。系统特性使然，完美�
     - **重点内容**：毕业论文、实验数据、作业、微信聊天记录等
     
 ### U盘启动
+
+此时需准备好Ventoy安装盘（制作方法见下文**补充知识**）
 
 1. 修改BIOS设置
     - 开机，按特定键进BIOS，按键一般为<kbd>F2</kbd> / <kbd>F10</kbd> / <kbd>Delete</kbd>
