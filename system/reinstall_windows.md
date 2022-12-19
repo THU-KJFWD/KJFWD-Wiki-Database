@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-12-19T13:46:57.389Z
+date: 2022-12-19T13:47:14.390Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -33,7 +33,7 @@ Windows系统在长期使用后往往出现问题。系统特性使然，完美�
 - 主要备份：**系统盘数据**（Windows安装分区）
 - 备份到**其他分区**，或**外置储存**（U盘/移动硬盘）
 - 最常见数据源：**用户文件夹**
-    - 路径：%USERPROFILE% (如C:\Users\<用户名>)
+		- 路径：%USERPROFILE% (如C:\Users\<用户名>)
     - 包含：桌面、下载、文档、图片、视频、音乐等
     - **重点内容**：毕业论文、实验数据、作业、微信聊天记录等
     
