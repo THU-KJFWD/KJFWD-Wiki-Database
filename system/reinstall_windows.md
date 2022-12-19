@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-12-19T13:49:16.460Z
+date: 2022-12-19T13:49:48.147Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -76,9 +76,8 @@ Windows系统在长期使用后往往出现问题。系统特性使然，完美�
   - 磁盘可能很快会出现故障
   
 - BitLocker：Windows磁盘加密功能
-	- 需要提前解密的情况
-      1. 主系统无法登陆，影响数据备份
-      1. 数据盘（如D:）被加密，重装后无法自动解密
+  - 主系统无法登陆，影响数据备份
+  - 数据盘（如D:）被加密，重装后无法自动解密
   - 解密方法
   	- [登陆微软账户](https://account.microsoft.com/devices/recoverykey)，查看在线保存的密钥
 
