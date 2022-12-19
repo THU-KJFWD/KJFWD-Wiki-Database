@@ -2,7 +2,7 @@
 title: Windows系统重装
 description: 快进到重开
 published: true
-date: 2022-12-19T13:30:29.829Z
+date: 2022-12-19T13:30:40.941Z
 tags: 
 editor: markdown
 dateCreated: 2022-11-30T05:50:38.526Z
@@ -17,10 +17,10 @@ Windows系统在长期使用后往往出现问题。系统特性使然，完美�
 
 ## 重装步骤
 
-重新安装Windows时，存在两项主要选择：
+重新安装Windows时，存在两项主要选择（详情请查阅[微软官方文档](https://support.microsoft.com/zh-cn/windows/%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85-windows-d8369486-3e33-7d9c-dccc-859e2b022fc7#WindowsVersion=Windows_11)）
 1. 重置系统 / 安装媒体重新安装
 2. 保留个人文件 / 删除所有内容
-详情请查阅[微软官方文档](https://support.microsoft.com/zh-cn/windows/%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85-windows-d8369486-3e33-7d9c-dccc-859e2b022fc7#WindowsVersion=Windows_11)
+
 
 ### 准备工作
 > 数据无价，注意备份！
