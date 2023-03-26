@@ -1,5 +1,5 @@
 ---
-title: 纪律管理办法与津贴发放标准
+title: 2.纪律管理办法与津贴发放标准
 description:
 published: true
 date: 2022-11-17T09:01:25.189Z

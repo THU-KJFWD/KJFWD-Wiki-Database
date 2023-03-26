@@ -1,5 +1,5 @@
 ---
-title: 科技服务分队技术与操作规范
+title: 2.技术与操作规范
 description: 噗叽啪，静电来咯
 published: true
 date: 2022-11-17T07:16:33.940Z
