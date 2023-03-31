@@ -1,6 +1,6 @@
 # 从0开始你的Arch Linux之旅
 
-#### 关于Arch Linux
+## 关于Arch Linux
 
 Arch Linux 是一个独立开发的 x86-64 通用 GNU/Linux 发行版，和Ubuntu、Debian等比较耳熟能详的发行版不同，Arch Linux保持着高度的多样性，在安装时只提供了一个命令行界面，用户可以通过在官方存储库中提供的数千个高质量软件包中进行选择来构建自定义系统，避免了存储空间和捉紧和安装软件的冗余。
 
@@ -10,7 +10,7 @@ Arch Linux 是一个独立开发的 x86-64 通用 GNU/Linux 发行版，和Ubunt
 | ubuntu-20.04.5-desktop-amd64.iso    | 3.59GB    |
 | ubuntu-22.10-desktop-amd64.iso      | 3.79GB    |
 
-#### 启动操作系统
+## 启动操作系统
 
 由于安装Arch Linux只提供了一个命令行界面，我们需要了解一台计算机加载操作系统并启动的过程，来进一步明确在安装过程中每一步的目的。
 
@@ -25,7 +25,7 @@ Arch Linux 是一个独立开发的 x86-64 通用 GNU/Linux 发行版，和Ubunt
 
 Ref: <https://www.nielit.gov.in/gorakhpur/sites/default/files/Gorakhpur/OLEVEL_ICT_2_26Mar_RP.pdf>
 
-#### BootLoader
+## BootLoader
 
 上面说到计算机首先执行ROM中的一个相对较小的程序以及一些需要的数据，初始化 CPU 和主板，初始化内存并将操作系统中的程序和数据加载到 RAM 中的设备。启动这一系列操作的小程序就叫**BootLoader**。<img style="float: right;" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Logo_of_the_UEFI_Forum.svg" width="20%">
 
@@ -34,7 +34,7 @@ Ref: <https://www.nielit.gov.in/gorakhpur/sites/default/files/Gorakhpur/OLEVEL_I
 + First-Stage BootLoader：例如BIOS、**UEFI** （**U**nified **E**xtensible **F**irmware **I**nterface）
 + Second-Stage BootLoader：例如在笔记本上常见的GNU GRUB（很多来装双系统的同学或队员在笔记本的启动界面会看到他）。它们本身不是操作系统，但能够正确加载操作系统并将执行转移给它。第二阶段引导加载程序不需要驱动程序来运行，而是可以使用系统固件提供的通用存储访问方法，例如 BIOS、UEFI 。
 
-#### 分区与挂载
+## 分区与挂载
 
 挂载点（**mount point**）是一个文件系统中的文件夹，可以逻辑上链接到另一个文件系统，是大多数与**便携式操作系统**（也就是我们的装机盘）接口兼容的操作系统运行的基础。挂载命令（**mount**）用来让我们的系统访问到其他设备或文件系统，并将系统根目录与挂载点连接。
 
@@ -48,7 +48,7 @@ Ref:https://en.wikipedia.org/wiki/System_partition_and_boot_partition
 
 有了如上的基本了解，我们可以在USB中下载好Arch Linux镜像，安装一个属于自己的Arch Linux啦！
 
-#### Installation Guide
+## Installation Guide
 
 **安装过程请确保已连接有线网**。这次我们选择UEFI。Security Boot已经是老生常谈了，从USB中导入后进入我们的安装系统（为了可以重复安装这里使用虚拟机来演示）：
 
