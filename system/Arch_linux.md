@@ -2,7 +2,7 @@
 title: Arch_linux
 description: 
 published: true
-date: 2023-04-01T11:55:51.946Z
+date: 2023-04-01T12:07:24.900Z
 tags: 
 editor: markdown
 dateCreated: 2023-03-31T03:19:39.196Z
@@ -96,7 +96,7 @@ fdisk /dev/sda
 cfdisk /dev/sda
 ```
 
-![image-20230329120328500](./Arch_linux_image/image-20230329120328500.png)
+![image-20230329120328500.png](/arch_linux_image/image-20230329120328500.png)
 
 这里/dev/sda1拟用作引导分区，/dev/sda2拟用作系统分区（见**分区与挂载**）。
 
@@ -111,7 +111,7 @@ mkfs.ext4 /dev/sda2      # 系统分区
 
 对比Ubuntu（见下图），可以看到 Ubuntu 自动分析了当前磁盘状况，决定把自己安装到/dev/nvme0n1 这块盘的 partition 5，并将其格式化为 ext4 格式。
 
-![image-20230329011637290](./Arch_linux_image/image-20230329011637290.png)
+![image-20230329011637290.png](/arch_linux_image/image-20230329011637290.png)
 
 挂载操作：
 
@@ -128,7 +128,7 @@ mount --mkdir /dev/sda1 /mnt/boot
 df -Th
 ```
 
-![](./Arch_linux_image/微信图片_20230329164621.png)
+![w.png](/arch_linux_image/w.png)
 
 首先我们的引导分区和系统分区的文件格式正确，而且注意Mount on列，/dev被自动挂载到/dev下，而前两个分区按照之前的操作被挂载到相应的目录下，即意味着我可以在 /mnt 下访问到 /dev/sda2下的数据，/mnt/boot 同理。
 
@@ -162,7 +162,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 查看“分区表”：
 
-![image-20230329011110468](./Arch_linux_image/image-20230329011110468.png)
+![image-20230329011110468.png](/arch_linux_image/image-20230329011110468.png)
 
 针对上述参数作进一步说明：
 
@@ -182,8 +182,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 ```bash
 arch-chroot /mnt
 ```
-
-![image-20230329012110040](./Arch_linux_image/image-20230329012110040.png)
+![image-20230329012110040.png](/arch_linux_image/image-20230329012110040.png)
 
 即：我们从我们的引导盘中的命令行环境，切入到了我们所安装的系统环境。
 
@@ -205,7 +204,7 @@ passwd
 bootctl install
 ```
 
-![image-20230329121840104](./Arch_linux_image/image-20230329121840104.png)
+![image-20230329121840104.png](/arch_linux_image/image-20230329121840104.png)
 
 一个类似Windows Boot Manager 的条目就被成功创建（PS：这是一个悲伤的故事，由于前文一直在强调我们采用UEFI引导，而我在此处报错是因为虚拟机设置中没选用UEFI，故在此提醒想用虚拟机尝试的朋友记得修改虚拟机设置。）。
 
@@ -229,7 +228,7 @@ initrd  /initramfs-linux.img
 options root="LABEL=arch_os" rw
 ```
 
-![image-20230329122434871](./Arch_linux_image/image-20230329122434871.png)
+![image-20230329122434871.png](/arch_linux_image/image-20230329122434871.png)
 
 wait a minute，我们还没有安装 intel-ucode，即（Intel）微码。
 
@@ -243,21 +242,19 @@ pacman -S intel-ucode
 
 Linux内核在boot分区下[vmlinuz-linux](https://en.wikipedia.org/wiki/Vmlinux)：
 
-![image-20230329022550710](./Arch_linux_image/image-20230329022550710.png)
+![image-20230329022550710.png](/arch_linux_image/image-20230329022550710.png)
 
 同时，root标记下将系统分区UUID复制到LABEL处（如下图）。
 
-![image-20230329022940834](./Arch_linux_image/image-20230329022940834.png)
+![image-20230329022940834.png](/arch_linux_image/image-20230329022940834.png)
 
 至此我们创建好了Arch Linux的引导。
 
 重新查看/boot分区下的文件：
-
-![image-20230329122528925](./Arch_linux_image/image-20230329122528925.png)
+![image-20230329122528925.png](/arch_linux_image/image-20230329122528925.png)
 
 对比Ubuntu，其会自动的创建引导，若双系统则自动的与Windows Boot Manager放在一起。
-
-![image-20230329023550593](./Arch_linux_image/image-20230329023550593.png)
+![image-20230329023550593.png](/arch_linux_image/image-20230329023550593.png)
 
 不要忘了，至今我们都在用有线网，在进入系统之前不要忘记配置新系统的网络（别问我为什么知道，问就是我因为这个重装了三遍）：
 
@@ -284,8 +281,7 @@ passwd pbc
 ```
 
 对比Ubuntu：
-
-![image-20230329104448021](./Arch_linux_image/image-20230329104448021.png)
+![image-20230329104448021.png](/arch_linux_image/image-20230329104448021.png)
 
 一次只能选择一个用户，且并不能配置root权限。在Arch Linux中，我们可以在安装过程中直接分配不同的用户，比如额外添加用户：
 
@@ -308,8 +304,7 @@ systemctl enable sddm	 # 桌面环境开机自启动
 之后，一个可以基本运行的arch Linux就此完成。在完成了**启动操作系统**的所有步骤之后，我们终于可以ctrl-D退出此环境，reboot重启系统。
 
 启动之后，会进入用户选择界面：
-
-![image-20230329124417801](./Arch_linux_image/image-20230329124417801.png)
+![image-20230329124417801.png](/arch_linux_image/image-20230329124417801.png)
 
 进入桌面后，打开终端konsole：
 
@@ -319,7 +314,7 @@ pacman -S neofetch
 neofetch
 ```
 
-![image-20230329124631597](./Arch_linux_image/image-20230329124631597.png)
+![image-20230329124631597.png](/arch_linux_image/image-20230329124631597.png)
 
 一个典型的Linux系统消息被输出到显示器。
 
