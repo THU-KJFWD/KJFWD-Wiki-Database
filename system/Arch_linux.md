@@ -2,7 +2,7 @@
 title: Arch_linux
 description: 
 published: true
-date: 2023-04-01T11:17:59.233Z
+date: 2023-04-01T11:26:58.458Z
 tags: 
 editor: markdown
 dateCreated: 2023-03-31T03:19:39.196Z
@@ -332,4 +332,4 @@ neofetch
 + 管理代理端口
 + 尝试操作双系统安装
 
-从此，一个Arch Linux之旅就此开始！（参考[ArchWike](https://wiki.archlinux.org/)）
+从此，一个Arch Linux之旅就此开始！（参考[ArchWiki](https://wiki.archlinux.org/)）
