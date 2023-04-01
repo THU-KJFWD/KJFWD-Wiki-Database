@@ -2,7 +2,7 @@
 title: Arch_linux
 description: 
 published: true
-date: 2023-04-01T11:26:58.458Z
+date: 2023-04-01T11:28:05.012Z
 tags: 
 editor: markdown
 dateCreated: 2023-03-31T03:19:39.196Z
@@ -138,10 +138,10 @@ df -Th
 vim /etc/pacman.d/mirrorlist # vim-文本编辑器 pacman-Arch Linux包管理器 /etc-配置文件目录
 ```
 
-添加中科大源：
+添加tuna源：
 
 ```bash
-Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
+Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
 ```
 
 随后开始安装内核与基本的硬件驱动（见**启动操作系统第一步**）。
