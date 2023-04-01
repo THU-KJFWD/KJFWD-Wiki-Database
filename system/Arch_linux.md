@@ -2,7 +2,7 @@
 title: Arch_linux
 description: 
 published: true
-date: 2023-04-01T11:50:24.092Z
+date: 2023-04-01T11:51:05.090Z
 tags: 
 editor: markdown
 dateCreated: 2023-03-31T03:19:39.196Z
