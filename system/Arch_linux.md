@@ -2,7 +2,7 @@
 title: Arch_linux
 description: 
 published: true
-date: 2023-04-01T11:53:02.151Z
+date: 2023-04-01T11:55:51.946Z
 tags: 
 editor: markdown
 dateCreated: 2023-03-31T03:19:39.196Z
@@ -72,7 +72,7 @@ fdisk -l
 
 系统输出类似于：
 
-![image-20230329000015774](./Arch_linux_image/image-20230329000015774.png)
+![image-20230329000015774.png](/arch_linux_image/image-20230329000015774.png)
 
 从上面可以看到，总扇区有67108864个（如果你使用过Disk Genius 来扫描坏道的话是可以看到若干扇区的），每个扇区大小为512bytes，相乘恰好为34359738368。
 
@@ -84,11 +84,11 @@ fdisk /dev/sda
 
 先按“g”，表示使用GPT格式创建分区，**对应UEFI引导**（mark 亲测如果忽略了这步后面可能不成功）；“p”查看分区状态。
 
-![](./Arch_linux_image/其他 Linux 5.x 内核 64 位 (2)-2023-03-29-11-58-05.png)
+![1.png](/arch_linux_image/1.png)
 
 分区后效果：
 
-![](./Arch_linux_image/其他 Linux 5.x 内核 64 位 (2)-2023-03-29-11-58-051.png)
+![2.png](/arch_linux_image/2.png)
 
 当然，如果你不习惯fdisk的操作，也可以：
 
