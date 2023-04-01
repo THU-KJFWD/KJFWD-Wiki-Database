@@ -2,7 +2,7 @@
 title: Arch_linux
 description: 
 published: true
-date: 2023-04-01T11:28:05.012Z
+date: 2023-04-01T11:50:24.092Z
 tags: 
 editor: markdown
 dateCreated: 2023-03-31T03:19:39.196Z
@@ -62,7 +62,7 @@ Ref:https://en.wikipedia.org/wiki/System_partition_and_boot_partition
 
 **安装过程请确保已连接有线网**。这次我们选择UEFI。Security Boot已经是老生常谈了，从USB中导入后进入我们的安装系统（为了可以重复安装这里使用虚拟机来演示）：
 
-![image-20230328235014553](./Arch_linux_image/image-20230328235014553.png)
+![image-20230328235014553](./Arch_linux_image/1.png)
 
 首先查看磁盘状态：
 
