@@ -2,7 +2,7 @@
 title: Arch_linux
 description: 
 published: true
-date: 2023-04-01T11:15:47.337Z
+date: 2023-04-01T11:17:59.233Z
 tags: 
 editor: markdown
 dateCreated: 2023-03-31T03:19:39.196Z
@@ -26,7 +26,7 @@ Arch Linux 是一个独立开发的 x86-64 通用 GNU/Linux 发行版，和Ubunt
 
 启动过程分为六步：
 
-1. **ROM(read-only memory)** 将**BIOS(basic input/output system)**装载入内存后，启动程序开始运行并控制硬件。
+1. **ROM(read-only memory)** 将 **BIOS(basic input/output system)** 装载入内存后，启动程序开始运行并控制硬件。
 2. BIOS执行**POST（The Power-On-Self-Test）**，即开机自检，来检查输入/输出的可操作性。如果检测出现问题，电脑就会发出 “bee---” 的声响（相信科服的朋友线下值班的时候都遇见过这种怪叫的笔记本）。
 3. BIOS寻找**操作系统（OS）**，搜索信息存放在CMOS中（每次去除静电都要拔下来的那个小电池），在此过程中，操作系统内核也被加载进内存中。随后，操作系统开始支配电脑并加载系统配置信息。
 4. 系统配置，加载外围设备和驱动程序。
