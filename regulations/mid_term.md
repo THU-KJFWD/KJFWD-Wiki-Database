@@ -1,11 +1,11 @@
 ---
-title: 中期考核
-description: 
+title: 3.中期考核
+description: 哎呀呀,不会呀
 published: true
-date: 2023-05-10T06:53:51.124Z
+date: 2023-05-10T18:36:26.566Z
 tags: 
 editor: markdown
-dateCreated: 2023-05-10T06:53:51.124Z
+dateCreated: 2023-05-10T18:28:41.442Z
 ---
 
 # 线上考核:使用 WePE 安装 Windows10 系统后完成迁移
