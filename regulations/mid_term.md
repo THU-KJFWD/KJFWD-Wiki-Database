@@ -2,7 +2,7 @@
 title: 3.中期考核
 description: 哎呀呀,不会呀
 published: true
-date: 2023-05-10T18:36:26.566Z
+date: 2023-05-10T18:37:37.907Z
 tags: 
 editor: markdown
 dateCreated: 2023-05-10T18:28:41.442Z
@@ -30,7 +30,7 @@ dateCreated: 2023-05-10T18:28:41.442Z
 
 4. 现在准备给 64G 的那块硬盘里面安装一个 windows10 系统吧!下面是简单的步骤.
    - 引导进 WePE 镜像
-   - 打开 diskgenius,使用"快速分区"功能对 100G 硬盘分区成"GPT(GUID)分区表"的硬盘,分区数量为 1(使用 MBR/legacy 安装不能算作通过测试!)
+   - 打开 diskgenius,使用"快速分区"功能对 64G 硬盘分区成"GPT(GUID)分区表"的硬盘,分区数量为 1(使用 MBR/legacy 安装不能算作通过测试!)
    - 使用"windows 安装器"或"dism++",选择 windows10 安装镜像中 sources/install.wim 作为镜像,64G 硬盘中的 ESP 分区和系统分区作为安装目的地,开始安装win10 专业版.
    - 完成 OOBE 阶段,用户名为 admin,密码为空.
    - 进入设备管理器,为带感叹号的虚拟网卡和 PCI 设备安装驱动,驱动在 virt-io DVD 光盘中.[教程](https://blog.csdn.net/allway2/article/details/103125982)
@@ -38,7 +38,7 @@ dateCreated: 2023-05-10T18:28:41.442Z
 
 5. 安装完系统后就可以迁移系统了!下面是一些个步骤.
    - 引导进WePE镜像
-   - 打开diskgenius,使用"磁盘克隆"将64G硬盘中已经安装的系统盘完整克隆到2128G硬盘中.注意尾部空间分配.
+   - 打开diskgenius,使用"磁盘克隆"将64G硬盘中已经安装的系统盘完整克隆到128G硬盘中.注意尾部空间分配.
    - 迁移完成后记得修引导哦
    - 关机,在网页管理中的硬件选项分离64G硬盘.记得调整引导顺序哦
    - 开机,叫监考过来验收.
