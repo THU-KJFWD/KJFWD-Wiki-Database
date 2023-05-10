@@ -2,7 +2,7 @@
 title: 欢迎访问科技服务队Wiki
 description: 
 published: true
-date: 2022-12-15T20:15:23.023Z
+date: 2023-03-31T14:39:46.058Z
 tags: 
 editor: markdown
 dateCreated: 2022-09-22T03:57:31.654Z
@@ -21,7 +21,6 @@ dateCreated: 2022-09-22T03:57:31.654Z
 
 > 施工中：使用伟大的github编辑Wiki
 {.is-info}
-
 
 # 解决不了？
 若wiki上的指南不能解决您的问题，您可以联系我们解决您的问题：
